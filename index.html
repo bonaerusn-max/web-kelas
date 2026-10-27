@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<script>
+/* gerbang login: sebelum login, tampilan data disembunyikan */
+(function(){var ok=false;try{ok=sessionStorage.getItem("xdkv1.auth")==="1";}catch(e){}
+if(!ok)document.documentElement.className+=" gate";})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data siswa X DKV 1 — SMK Negeri 4 Batam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#E9EAE4; --paper-2:#F4F4F0;
+  --blue:#1B3AC4; --deep:#14246B; --pink:#FF4A8D; --yellow:#C98A00; --green:#0E8F63;
+  --rule:rgba(20,36,107,.22); --soft:rgba(27,58,196,.07);
+  --sh:6px 6px 0 var(--deep); --sh-sm:4px 4px 0 var(--deep); --grain:.05;
+  --glow-a:rgba(27,58,196,.18); --glow-b:rgba(255,74,141,.15); --grid:rgba(20,36,107,.07);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#12141A; --paper-2:#1A1D25;
+    --blue:#7D9BFF; --deep:#B9C7FF; --pink:#FF6FA3; --yellow:#FFD24D; --green:#3FD39C;
+    --rule:rgba(185,199,255,.26); --soft:rgba(125,155,255,.10);
+    --sh:6px 6px 0 rgba(125,155,255,.5); --sh-sm:4px 4px 0 rgba(125,155,255,.5); --grain:.085;
+    --glow-a:rgba(125,155,255,.20); --glow-b:rgba(255,111,163,.14); --grid:rgba(185,199,255,.07);
+  }
+  :root:not([data-theme="light"]) .poster::before{mix-blend-mode:screen}
+}
+:root[data-theme="dark"]{
+  --paper:#12141A; --paper-2:#1A1D25;
+  --blue:#7D9BFF; --deep:#B9C7FF; --pink:#FF6FA3; --yellow:#FFD24D; --green:#3FD39C;
+  --rule:rgba(185,199,255,.26); --soft:rgba(125,155,255,.10);
+  --sh:6px 6px 0 rgba(125,155,255,.5); --sh-sm:4px 4px 0 rgba(125,155,255,.5); --grain:.085;
+    --glow-a:rgba(125,155,255,.20); --glow-b:rgba(255,111,163,.14); --grid:rgba(185,199,255,.07);
+}
+:root[data-theme="dark"] .poster::before{mix-blend-mode:screen}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--deep);font-family:"Archivo",Helvetica,Arial,sans-serif;font-size:16px;line-height:1.5;overflow-x:hidden}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:99;opacity:var(--grain);background-image:radial-gradient(currentColor 1px,transparent 1px);background-size:4px 4px}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:
+  radial-gradient(700px 480px at 90% 6%,var(--glow-a),transparent 70%),
+  radial-gradient(560px 560px at 4% 65%,var(--glow-b),transparent 70%),
+  linear-gradient(var(--grid) 1px,transparent 1px) 0 0/40px 40px,
+  linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/40px 40px}
+h1,h2,h3{font-family:"Archivo Black",sans-serif;font-weight:400;margin:0;line-height:1;letter-spacing:-.01em}
+button,select,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+.mast{padding:30px 0 24px;border-bottom:2px solid var(--deep)}
+.mast-top{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;flex-wrap:wrap}
+.school{font-size:.82rem;font-weight:600;max-width:30ch}
+.school span{display:block;color:var(--blue);font-weight:500}
+.mini{background:transparent;border:2px solid var(--deep);padding:7px 12px;font-size:.76rem;font-weight:600;cursor:pointer;border-radius:2px}
+.mini:hover{background:var(--deep);color:var(--paper)}
+h1.title{margin:26px 0 0;isolation:isolate;display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.kicker{display:inline-flex;align-items:center;gap:10px;background:var(--pink);color:#fff;font-family:"Archivo Black",sans-serif;text-transform:uppercase;letter-spacing:.2em;font-size:clamp(.85rem,2.3vw,1.3rem);line-height:1;padding:9px 16px 9px 14px;border:2px solid var(--deep);border-radius:2px;box-shadow:5px 5px 0 var(--deep);transform:rotate(-2deg);transform-origin:left center;animation:pop .6s cubic-bezier(.2,.9,.3,1.4) both}
+.kicker::before{content:"";width:.7em;height:.7em;background:#fff;border-radius:50%;box-shadow:0 0 0 2px var(--deep) inset}
+.poster{position:relative;display:inline-block;color:var(--blue);font-family:"Archivo Black",sans-serif;font-size:clamp(3.6rem,17vw,10.5rem);letter-spacing:-.04em;line-height:.85;padding:.06em 0 .12em}
+.poster::before,.poster::after{content:attr(data-t);position:absolute;left:0;top:.06em;pointer-events:none}
+.poster::before{z-index:-1;color:var(--pink);mix-blend-mode:multiply;transform:translate(.06em,.055em);animation:set .9s cubic-bezier(.2,.8,.25,1) both}
+.poster::after{z-index:-2;color:transparent;-webkit-text-stroke:2px var(--deep);transform:translate(.13em,.115em);animation:set2 1.1s cubic-bezier(.2,.8,.25,1) .1s both}
+@keyframes set{from{transform:translate(.2em,.17em)}}
+@keyframes set2{from{transform:translate(.3em,.26em);opacity:0}}
+@keyframes pop{from{transform:rotate(-8deg) scale(.6);opacity:0}}
+@media (prefers-reduced-motion:reduce){.poster::before,.poster::after,.kicker{animation:none}}
+.tag{margin:14px 0 0;max-width:52ch;font-size:.97rem}
+.stats{display:flex;flex-wrap:wrap;margin-top:24px;border:2px solid var(--deep);border-radius:2px;background:var(--paper-2)}
+.stat{flex:1 1 140px;padding:12px 15px;border-right:2px solid var(--deep)}
+.stat:last-child{border-right:0}
+.stat b{display:block;font-family:"Archivo Black",sans-serif;font-size:1.5rem;line-height:1.15;color:var(--blue)}
+.stat small{font-size:.74rem;font-weight:500;opacity:.8}
+
+.bar{position:sticky;top:0;z-index:60;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(6px);border-bottom:2px solid var(--deep)}
+.bar-in{display:flex;gap:8px;overflow-x:auto;padding:11px 20px;max-width:1120px;margin:0 auto;scrollbar-width:none}
+.bar-in::-webkit-scrollbar{display:none}
+.tab{white-space:nowrap;background:var(--paper-2);border:2px solid var(--deep);border-radius:2px;padding:8px 14px;font-size:.85rem;font-weight:600;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,background .15s ease}
+.tab:hover{box-shadow:3px 3px 0 var(--deep);transform:translate(-1px,-1px)}
+.tab[aria-selected="true"]{background:var(--deep);color:var(--paper);box-shadow:none;transform:none}
+
+main{padding:30px 0 70px}
+.panel{display:none}.panel.on{display:block}
+.head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:16px}
+.head h2{font-size:clamp(1.45rem,4vw,2rem)}
+.head p{margin:6px 0 0;font-size:.86rem;opacity:.85;max-width:56ch}
+.ctl{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.f{background:var(--paper-2);border:2px solid var(--deep);border-radius:2px;padding:8px 10px;font-size:.85rem;font-weight:500;max-width:100%}
+select.f{cursor:pointer}
+.btn{background:var(--deep);color:var(--paper);border:2px solid var(--deep);border-radius:2px;padding:9px 15px;font-size:.85rem;font-weight:700;cursor:pointer}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:var(--sh-sm)}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.btn.ghost{background:transparent;color:var(--deep)}
+.btn.pink{background:var(--pink);border-color:var(--pink);color:#fff}
+.sheet{border:2px solid var(--deep);border-radius:2px;background:var(--paper-2);overflow:hidden}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:.86rem;min-width:640px}
+thead th{background:var(--deep);color:var(--paper);text-align:left;padding:10px 13px;font-weight:600;font-size:.77rem;white-space:nowrap}
+tbody td,tfoot td{padding:10px 13px;border-top:1px solid var(--rule);vertical-align:middle}
+tbody tr{transition:background .12s ease}
+tbody tr:nth-child(even){background:var(--soft)}
+tbody tr:hover{background:rgba(255,74,141,.08)}
+tfoot td{font-weight:700;border-top:2px solid var(--deep)}
+.nm{font-weight:600}
+.n{font-variant-numeric:tabular-nums}
+.empty{padding:26px 16px;text-align:center;font-size:.88rem;opacity:.75}
+.pill{display:inline-block;padding:3px 8px;border-radius:2px;font-size:.72rem;font-weight:700;border:1.5px solid;white-space:nowrap}
+.ok{color:var(--green);border-color:var(--green)}
+.no{color:var(--pink);border-color:var(--pink)}
+.part{color:var(--yellow);border-color:var(--yellow)}
+.meter{height:7px;background:var(--soft);border:1px solid var(--rule);border-radius:2px;overflow:hidden;min-width:64px}
+.meter i{display:block;height:100%;background:var(--blue)}
+
+.org{display:flex;flex-direction:column;align-items:center;gap:0}
+.tier{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;width:100%;position:relative}
+.tier+.tier{margin-top:34px}
+.tier+.tier::before{content:"";position:absolute;left:50%;top:-34px;width:2px;height:34px;background:var(--deep);transform:translateX(-1px)}
+.role{position:relative;flex:1 1 240px;max-width:330px;display:flex;align-items:center;gap:14px;border:2px solid var(--deep);border-radius:2px;background:var(--paper-2);padding:20px 16px 16px;box-shadow:var(--sh-sm);transition:transform .15s ease,box-shadow .15s ease;overflow:hidden}
+.role::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:var(--acc,var(--pink))}
+.role:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--deep)}
+.av{flex:none;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--deep);color:var(--paper);font-family:"Archivo Black",sans-serif;font-size:1.05rem;letter-spacing:.02em;border:2px solid var(--deep);box-shadow:3px 3px 0 var(--acc,var(--pink))}
+.rbody{min-width:0}
+.job{font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--acc,var(--pink));margin-bottom:3px}
+.rn{font-family:"Archivo Black",sans-serif;font-size:1.02rem;line-height:1.15;overflow-wrap:anywhere}
+.urus{display:inline-block;margin-top:8px;font-size:.72rem;font-weight:600;border:1.5px solid var(--rule);border-radius:99px;padding:2px 9px;color:var(--deep);background:var(--soft)}
+.role.lead{max-width:480px;flex-basis:380px;background:var(--deep);color:var(--paper);box-shadow:var(--sh-sm);padding:24px 22px 20px;gap:18px}
+.role.lead::before{background:var(--yellow);height:8px}
+.role.lead .av{width:68px;height:68px;font-size:1.35rem;background:var(--yellow);color:#14246B;border-color:var(--paper);box-shadow:3px 3px 0 var(--pink)}
+.role.lead .job{color:var(--paper);opacity:.8}
+.role.lead .rn{font-size:1.5rem}
+.role.lead .urus{color:var(--paper);border-color:var(--paper);background:transparent}
+.role.pk{--acc:var(--pink)}
+.role.sk{--acc:var(--blue)}
+.role.bd{--acc:var(--green)}
+@media (max-width:640px){.role,.role.lead{max-width:none;flex-basis:100%}.tier+.tier{margin-top:28px}.tier+.tier::before{top:-28px;height:28px}}
+
+.days{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:15px}
+.day{border:2px solid var(--deep);border-radius:2px;background:var(--paper-2);overflow:hidden}
+.day h3{background:var(--deep);color:var(--paper);padding:9px 13px;font-size:.98rem}
+.slot{display:flex;gap:11px;padding:8px 13px;border-top:1px solid var(--rule);font-size:.85rem}
+.slot:first-of-type{border-top:0}
+.slot .jam{font-weight:700;color:var(--pink);font-size:.74rem;min-width:52px;padding-top:2px;white-space:nowrap}
+.slot b{font-weight:600;display:block}
+.slot small{opacity:.75;font-size:.75rem}
+.slot.kosong{opacity:.5}
+
+
+/* ---- percantik 4 tab ---- */
+.panel.on{animation:rise .35s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}}
+@media (prefers-reduced-motion:reduce){.panel.on{animation:none}}
+.head h2{display:inline-block;background:linear-gradient(transparent 62%,var(--acc-h,var(--pink)) 62%,var(--acc-h,var(--pink)) 92%,transparent 92%);padding:0 4px;margin-left:-4px}
+#p-siswa{--acc-h:var(--pink)}#p-jadwal{--acc-h:var(--blue)}#p-kas{--acc-h:var(--green)}#p-absensi{--acc-h:var(--yellow)}
+.sheet{box-shadow:var(--sh-sm)}
+thead th{position:sticky;top:0}
+tbody tr:hover{box-shadow:inset 4px 0 0 var(--pink)}
+.count{font-size:.78rem;font-weight:600;opacity:.75;margin:-4px 0 10px}
+
+/* data siswa */
+.who{display:flex;align-items:center;gap:10px}
+.ava{flex:none;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-family:"Archivo Black",sans-serif;font-size:.68rem;color:#14246B;border:2px solid var(--deep)}
+.ava.c0{background:#FFB3D0}.ava.c1{background:#B5C4FF}.ava.c2{background:#9BE7C8}.ava.c3{background:#FFE08A}.ava.c4{background:#D7B8FF}
+.jk{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;font-size:.72rem;font-weight:800;border:2px solid}
+.jk.L{color:var(--blue);border-color:var(--blue)}.jk.P{color:var(--pink);border-color:var(--pink)}
+.chipc{display:inline-block;background:var(--soft);border:1.5px solid var(--rule);border-radius:99px;padding:2px 10px;font-size:.78rem;font-weight:600}
+
+/* jadwal */
+.day{--acc:var(--pink);box-shadow:var(--sh-sm);transition:transform .15s ease}
+.day:hover{transform:translate(-2px,-2px)}
+.day.d1{--acc:var(--pink)}.day.d2{--acc:var(--blue)}.day.d3{--acc:var(--green)}.day.d4{--acc:var(--yellow)}.day.d0{--acc:var(--pink)}
+.day h3{display:flex;justify-content:space-between;align-items:center;border-bottom:5px solid var(--acc)}
+.day h3 small{font-family:"Archivo",sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.04em;opacity:.85}
+.day.today{outline:3px solid var(--acc);outline-offset:3px}
+.day .now{background:var(--acc);color:#14246B;font-family:"Archivo",sans-serif;font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:99px;margin-left:8px}
+.slot{position:relative;padding-left:16px;align-items:flex-start}
+.slot::before{content:"";position:absolute;left:0;top:8px;bottom:8px;width:4px;border-radius:0 3px 3px 0;background:var(--acc)}
+.slot .jam{flex:none;width:70px;background:var(--soft);border-radius:4px;padding:3px 0;color:var(--deep);text-align:center}
+
+/* uang kas */
+.kassum{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:18px}
+.kc{border:2px solid var(--deep);border-radius:2px;background:var(--paper-2);padding:14px 16px;box-shadow:var(--sh-sm);border-top:6px solid var(--acc)}
+.kc small{display:block;font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.8}
+.kc b{display:block;font-family:"Archivo Black",sans-serif;font-size:1.45rem;line-height:1.2;margin-top:2px;color:var(--acc)}
+.kc.in{--acc:var(--green)}.kc.out{--acc:var(--pink)}.kc.sal{--acc:var(--blue)}
+.prog{margin:-4px 0 18px;border:2px solid var(--deep);border-radius:2px;background:var(--paper-2);padding:12px 16px}
+.prog .pt{display:flex;justify-content:space-between;font-size:.8rem;font-weight:700;margin-bottom:7px}
+.prog .pb{height:14px;border:2px solid var(--deep);border-radius:99px;background:var(--soft);overflow:hidden}
+.prog .pb i{display:block;height:100%;background:repeating-linear-gradient(45deg,var(--green) 0 8px,color-mix(in srgb,var(--green) 70%,#fff) 8px 16px);transition:width .5s ease}
+td.paid{color:var(--green);font-weight:700;background:color-mix(in srgb,var(--green) 9%,transparent)}
+td.half{color:var(--yellow);font-weight:700;background:color-mix(in srgb,var(--yellow) 10%,transparent)}
+
+/* absensi */
+.abssum{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media (max-width:520px){.abssum{grid-template-columns:repeat(2,1fr)}}
+.ac{border:2px solid var(--deep);border-radius:2px;background:var(--paper-2);padding:10px 12px;box-shadow:var(--sh-sm);border-top:6px solid var(--acc)}
+.ac b{display:block;font-family:"Archivo Black",sans-serif;font-size:1.6rem;line-height:1.1;color:var(--acc)}
+.ac small{font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;opacity:.85}
+.ac.H{--acc:var(--green)}.ac.S{--acc:var(--yellow)}.ac.I{--acc:var(--blue)}.ac.A{--acc:var(--pink)}
+.meter i.hi{background:var(--green)}.meter i.mid{background:var(--yellow)}.meter i.lo{background:var(--pink)}
+.meter{height:9px;min-width:80px}
+.log .who2{display:flex;align-items:center;gap:10px}
+.log .badge{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:.8rem;color:#14246B;border:2px solid var(--deep)}
+.log .badge.H{background:var(--green)}.log .badge.S{background:var(--yellow)}.log .badge.I{background:var(--blue);color:var(--paper)}.log .badge.A{background:var(--pink);color:#fff}
+
+/* pemutar musik */
+.music{position:fixed;right:18px;bottom:18px;z-index:70;display:flex;align-items:center;gap:8px}
+.mbtn{width:38px;height:38px;border-radius:50%;background:var(--paper-2);color:var(--deep);border:2px solid var(--deep);font-size:1.3rem;font-weight:800;line-height:1;cursor:pointer;box-shadow:3px 3px 0 var(--deep);display:grid;place-items:center;padding:0 0 3px;transition:transform .15s ease,box-shadow .15s ease}
+.mbtn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--deep)}
+.mmain{display:flex;align-items:center;gap:10px;background:var(--pink);color:#fff;border:2px solid var(--deep);border-radius:99px;padding:9px 16px 9px 14px;font-size:.82rem;font-weight:700;cursor:pointer;box-shadow:var(--sh-sm);transition:transform .15s ease,box-shadow .15s ease}
+.mmain:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--deep)}
+.mmain .lb{max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mmain .pl{width:0;height:0;border-left:11px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent;margin-left:2px}
+.mmain .eq{display:none;align-items:flex-end;gap:3px;height:16px}
+.mmain .eq i{display:block;width:3px;height:4px;background:#fff;border-radius:2px}
+.mmain.on .pl{display:none}.mmain.on .eq{display:flex}
+.mmain.on .eq i{animation:eq .8s ease-in-out infinite alternate}
+.mmain.on .eq i:nth-child(2){animation-delay:.2s}.mmain.on .eq i:nth-child(3){animation-delay:.4s}.mmain.on .eq i:nth-child(4){animation-delay:.1s}
+@keyframes eq{from{height:4px}to{height:16px}}
+@media (prefers-reduced-motion:reduce){.mmain.on .eq i{animation:none;height:10px}}
+@media (max-width:480px){.music{right:10px;bottom:12px;gap:6px}.mmain .lb{max-width:92px}.mbtn{width:34px;height:34px}}
+
+.two{display:grid;grid-template-columns:minmax(0,330px) minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:820px){.two{grid-template-columns:1fr}}
+.card{border:2px solid var(--deep);border-radius:2px;background:var(--paper-2);padding:17px;box-shadow:var(--sh)}
+.card h3{font-size:1.1rem;margin-bottom:4px}
+.card>p{margin:0 0 13px;font-size:.83rem;opacity:.85}
+.row{margin-bottom:11px}
+.row label{display:block;font-size:.79rem;font-weight:600;margin-bottom:4px}
+.row .f{width:100%}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.log{display:flex;justify-content:space-between;gap:12px;padding:9px 13px;border-top:1px solid var(--rule);font-size:.84rem;align-items:center}
+.log:first-of-type{border-top:0}
+.log small{display:block;opacity:.75;font-size:.75rem}
+.st{font-weight:700;font-size:.74rem;border:1.5px solid;border-radius:2px;padding:2px 7px}
+.st.H{color:var(--green);border-color:var(--green)}
+.st.S{color:var(--yellow);border-color:var(--yellow)}
+.st.I{color:var(--blue);border-color:var(--blue)}
+.st.A{color:var(--pink);border-color:var(--pink)}
+.link{background:none;border:0;padding:0;font-size:.77rem;font-weight:600;color:var(--pink);cursor:pointer;text-decoration:underline}
+
+.ai-box{border:2px solid var(--deep);border-radius:2px;background:var(--paper-2);padding:17px;box-shadow:var(--sh)}
+.ai-out{white-space:pre-wrap;font-size:.92rem;border-top:2px solid var(--deep);margin-top:14px;padding-top:13px;min-height:2em}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.chip{background:transparent;border:1.5px solid var(--blue);color:var(--blue);border-radius:2px;padding:5px 10px;font-size:.78rem;font-weight:600;cursor:pointer;text-align:left}
+.chip:hover{background:var(--blue);color:var(--paper)}
+.ask{display:flex;gap:8px;flex-wrap:wrap}
+.ask .f{flex:1 1 220px}
+
+.modal{position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(20,36,107,.55);opacity:0;transition:opacity .15s ease}
+.modal.on{display:flex;opacity:1}
+.box{background:var(--paper);border:2px solid var(--deep);border-radius:2px;box-shadow:var(--sh);max-width:430px;width:100%;padding:19px;max-height:88vh;overflow-y:auto;transform:translateY(6px);transition:transform .15s ease}
+.modal.on .box{transform:translateY(0)}
+.box h3{font-size:1.25rem;margin-bottom:13px}
+.foot{display:flex;justify-content:flex-end;gap:8px;margin-top:5px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translate(-50%,150%);z-index:100;background:var(--deep);color:var(--paper);border-radius:2px;padding:11px 17px;font-size:.86rem;font-weight:600;box-shadow:var(--sh-sm);transition:transform .25s ease;max-width:90vw;text-align:center}
+.toast.on{transform:translate(-50%,0)}
+.note{font-size:.78rem;padding:7px 11px;border:1.5px dashed var(--rule);border-radius:2px;display:inline-block;margin-bottom:14px}
+footer{border-top:2px solid var(--deep);padding:18px 0 34px;font-size:.78rem}
+footer p{margin:0;opacity:.8}
+.steps{display:flex;gap:8px;margin-bottom:14px}
+.step{flex:1;text-align:center;padding:6px 0;border:2px solid var(--rule);border-radius:2px;font-size:.78rem;font-weight:700;opacity:.55}
+.step.on{border-color:var(--deep);background:var(--soft);opacity:1;color:var(--blue)}
+.step.done{border-color:var(--green);color:var(--green);opacity:1}
+.shake{animation:shk .3s}
+@keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.mini.open{background:var(--green);border-color:var(--green);color:var(--paper)}
+/* ---- kotak siswa, detail, tugas ---- */
+.sgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.scard{display:flex;align-items:center;gap:12px;text-align:left;background:var(--paper-2);border:2px solid var(--deep);border-radius:2px;box-shadow:var(--sh-sm);padding:14px;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
+.scard:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--deep)}
+.scard .ava{width:44px;height:44px;font-size:.85rem}
+.scard .sn{font-weight:700;line-height:1.2;overflow-wrap:anywhere}
+.sgrid .empty{grid-column:1/-1}
+.dl{display:grid;grid-template-columns:116px 1fr;gap:9px 12px;margin:0;font-size:.88rem}
+.dl dt{font-weight:700;font-size:.76rem;opacity:.7;padding-top:2px}
+.dl dd{margin:0;overflow-wrap:anywhere}
+.tsub{margin:6px 0 12px;font-size:.82rem;opacity:.85}
+.titem{border:2px solid var(--deep);border-radius:2px;background:var(--paper-2);margin-bottom:10px;overflow:hidden}
+.thead{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:left;background:none;border:0;padding:11px 12px;cursor:pointer}
+.thead:hover{background:var(--soft)}
+.thead b{display:block;line-height:1.2}
+.thead small{font-size:.74rem;opacity:.8}
+.tdet{padding:0 12px 12px;font-size:.85rem}
+.tdet[hidden]{display:none}
+.tdet p{margin:0 0 8px;white-space:pre-wrap}
+textarea.f{width:100%;min-height:80px;resize:vertical}
+/* ---- gerbang login ---- */
+html.gate body>*:not(#loginGate):not(script):not(style){display:none!important}
+#loginGate{display:none}
+html.gate #loginGate{display:grid;place-items:center;min-height:100vh;padding:20px;position:relative;z-index:100}
+.lg-card{width:100%;max-width:400px;background:var(--paper-2);border:2px solid var(--deep);border-radius:2px;box-shadow:var(--sh);padding:26px 22px}
+.lg-card h1{font-size:2.4rem;margin:16px 0 4px;color:var(--blue)}
+.lg-card p{margin:0 0 16px;font-size:.85rem;opacity:.85}
+.lg-card .f{width:100%;margin-bottom:14px;padding:10px 11px}
+.lg-card .btn{width:100%;padding:11px}
+.lg-tabs{display:flex;gap:8px;margin:0 0 16px}
+.lg-tab{flex:1;background:var(--paper);border:2px solid var(--deep);border-radius:2px;padding:8px;font-weight:700;cursor:pointer}
+.lg-tab[aria-selected="true"]{background:var(--deep);color:var(--paper)}
+.lg-pane[hidden]{display:none}
+.lg-err{min-height:1.3em;margin:10px 0 0;font-size:.82rem;font-weight:600;color:var(--pink)}
+.lg-hint{margin-top:14px;padding:8px 11px;border:1.5px dashed var(--deep);border-radius:2px;font-size:.78rem}
+.lg-link{display:block;margin-top:14px;font-size:.74rem;font-weight:600;color:var(--blue);overflow-wrap:anywhere}
+.lg-card.shake{animation:lgsh .35s}@keyframes lgsh{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+</style>
+</head>
+<body>
+
+<div id="loginGate"><main class="lg-card" id="lgCard">
+  <span class="kicker">Masuk dulu</span>
+  <h1>X DKV 1</h1>
+  <p>Pilih masuk sebagai siswa atau admin untuk membuka data kelas.</p>
+  <div class="lg-tabs" role="tablist">
+    <button class="lg-tab" type="button" role="tab" id="tabSiswa" aria-selected="true">Siswa</button>
+    <button class="lg-tab" type="button" role="tab" id="tabAdmin" aria-selected="false">Admin</button>
+  </div>
+  <form class="lg-pane" id="lgSiswa">
+    <div class="row"><label for="lgU">Username (NIS, atau NISN jika belum punya NIS)</label><input class="f" id="lgU" autocomplete="username" autocapitalize="none" required></div>
+    <div class="row"><label for="lgP">Kata sandi (NISN)</label><input class="f" id="lgP" type="password" autocomplete="current-password" required></div>
+    <button class="btn" id="lgGo" type="submit">Masuk sebagai siswa</button>
+  </form>
+  <form class="lg-pane" id="lgAdmin" hidden>
+    <div class="steps" id="lgSteps"><span class="step on">1</span><span class="step">2</span><span class="step">3</span></div>
+    <div class="row"><label for="lgA" id="lgALabel">Kata sandi verifikasi 1 dari 3</label><input class="f" id="lgA" type="password" autocomplete="off" required></div>
+    <button class="btn" id="lgAGo" type="submit">Lanjut</button>
+  </form>
+  <div class="lg-err" id="lgErr" role="alert"></div>
+  <div class="lg-hint" id="lgHint">Siswa bisa melihat dan mengubah datanya sendiri. Admin bisa mengubah semua data setelah verifikasi 3 kata sandi.</div>
+  <a class="lg-link" href="https://dkv10-1-k3-839af.web.app/">https://dkv10-1-k3-839af.web.app/</a>
+</main></div>
+
+<header class="mast"><div class="wrap">
+  <div class="mast-top">
+    <div class="school">SMK Negeri 4 Batam<span>Desain Komunikasi Visual · Angkatan 2026/2028 · Semester Ganjil · Wali kelas Anah Purwani</span></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="mini" id="tugasBtn" type="button">Tugas</button>
+      <button class="mini" id="lockBtn" type="button">Buka kunci edit</button>
+      <button class="mini" id="themeBtn" type="button">Ganti warna kertas</button>
+      <button class="mini" id="outBtn" type="button">Keluar</button>
+    </div>
+  </div>
+  <h1 class="title"><span class="kicker">Data siswa</span><span class="poster" data-t="X DKV 1">X DKV 1</span></h1>
+  <p class="tag">Papan kelas digital: data 40 siswa, jadwal 11 jam pelajaran, kas kelas, dan presensi harian.</p>
+  <div class="stats">
+    <div class="stat"><b id="stJml">—</b><small>siswa terdaftar</small></div>
+    <div class="stat"><b id="stKas">—</b><small>pemasukan kas</small></div>
+    <div class="stat"><b id="stSaldo">—</b><small>saldo kas sekarang</small></div>
+    <div class="stat"><b id="stLunas">—</b><small>lunas sampai bulan dipilih</small></div>
+    <div class="stat"><b id="stHadir">—</b><small>rata-rata kehadiran</small></div>
+  </div>
+</div></header>
+
+<nav class="bar"><div class="bar-in" role="tablist">
+  <button class="tab" role="tab" aria-selected="true" data-tab="siswa">Data siswa</button>
+  <button class="tab" role="tab" aria-selected="false" data-tab="struktur">Struktur kelas</button>
+  <button class="tab" role="tab" aria-selected="false" data-tab="jadwal">Jadwal pelajaran</button>
+  <button class="tab" role="tab" aria-selected="false" data-tab="kas">Uang kas</button>
+  <button class="tab" role="tab" aria-selected="false" data-tab="absensi">Absensi</button>
+</div></nav>
+
+<main class="wrap">
+
+<section class="panel on" id="p-siswa">
+  <div class="head">
+    <div><h2>Data siswa</h2><p>Klik kotak nama untuk melihat semua datanya. Data tersimpan di database dan ikut berubah untuk semua yang membuka halaman ini.</p></div>
+    <div class="ctl">
+      <input class="f" id="cari" type="search" placeholder="Cari apa saja" style="width:200px">
+      <button class="btn" id="btnSiswa" type="button">Tambah siswa</button>
+    </div>
+  </div>
+  <div class="count" id="cnt"></div>
+  <div class="sgrid" id="gridSiswa"></div>
+</section>
+
+<section class="panel" id="p-struktur">
+  <div class="head"><div><h2>Struktur kelas</h2><p>Siapa yang dihubungi untuk urusan kelas, kas, dan surat izin.</p></div></div>
+  <div class="org">
+    <div class="tier t0">
+      <div class="role lead"><div class="av">AP</div><div class="rbody"><div class="job">Wali kelas</div><div class="rn">Anah Purwani</div><span class="urus">Pembimbing kelas</span></div></div>
+    </div>
+    <div class="tier t1">
+      <div class="role pk"><div class="av">MH</div><div class="rbody"><div class="job">Ketua kelas</div><div class="rn">Muhammad Habib Ali</div><span class="urus">Urusan kelas</span></div></div>
+      <div class="role pk"><div class="av">MI</div><div class="rbody"><div class="job">Wakil ketua</div><div class="rn">Muhamad Ikbal Laja</div><span class="urus">Urusan kelas</span></div></div>
+    </div>
+    <div class="tier t2">
+      <div class="role sk"><div class="av">AT</div><div class="rbody"><div class="job">Sekretaris</div><div class="rn">Aiera Triestia Khaliqa Larasati</div><span class="urus">Surat izin</span></div></div>
+      <div class="role bd"><div class="av">MJ</div><div class="rbody"><div class="job">Bendahara 1</div><div class="rn">Mira Jelita</div><span class="urus">Uang kas</span></div></div>
+      <div class="role bd"><div class="av">DA</div><div class="rbody"><div class="job">Bendahara 2</div><div class="rn">Dhivana Ananda Imsya</div><span class="urus">Uang kas</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="p-jadwal">
+  <div class="head">
+    <div><h2>Jadwal pelajaran</h2><p>Jam ke-1 mulai 07.00, jam ke-11 berakhir 15.30. Istirahat setelah jam ke-4 dan jam ke-7.</p></div>
+    <div class="ctl"><select class="f" id="minggu"><option value="ganjil">Minggu ganjil</option><option value="genap">Minggu genap</option></select></div>
+  </div>
+  <div class="days" id="hari"></div>
+</section>
+
+<section class="panel" id="p-kas">
+  <div class="head">
+    <div><h2>Uang kas</h2><p>Iuran Rp 20.000 per bulan. Pilih bulan untuk melihat siapa saja yang sudah lunas sampai bulan itu.</p></div>
+    <div class="ctl">
+      <select class="f" id="bulan"></select>
+      <button class="btn" id="btnBayar" type="button">Catat pembayaran</button>
+    </div>
+  </div>
+  <div class="kassum" id="kasSum"></div>
+  <div class="prog" id="kasProg"></div>
+  <div class="sheet" style="margin-bottom:22px"><div class="scroll">
+    <table><thead><tr id="thKas"></tr></thead><tbody id="tbKas"></tbody><tfoot id="tfKas"></tfoot></table>
+  </div></div>
+
+  <div class="head" style="margin-bottom:12px">
+    <div><h2 style="font-size:1.2rem">Pengeluaran kelas</h2></div>
+    <div class="ctl"><button class="btn ghost" id="btnOut" type="button">Tambah pengeluaran</button></div>
+  </div>
+  <div class="sheet"><div class="scroll">
+    <table><thead><tr><th>No</th><th>Barang</th><th>Jumlah</th><th>Total</th><th></th></tr></thead>
+    <tbody id="tbOut"></tbody><tfoot id="tfOut"></tfoot></table>
+  </div></div>
+</section>
+
+<section class="panel" id="p-absensi">
+  <div class="head"><div><h2>Absensi</h2><p>Isi kehadiran sendiri setiap hari. Jumlah sakit, izin, dan alfa tiap anak langsung terhitung di tabel rekap.</p></div></div>
+  <div class="two">
+    <form class="card" id="formAbsen">
+      <h3>Isi kehadiran</h3>
+      <p>Satu nama, satu isian per tanggal.</p>
+      <div class="row"><label for="aNama">Nama</label><select class="f" id="aNama" required></select></div>
+      <div class="row split">
+        <div><label for="aTgl">Tanggal</label><input class="f" type="date" id="aTgl" required></div>
+        <div><label for="aStatus">Status</label><select class="f" id="aStatus">
+          <option value="H">Hadir</option><option value="S">Sakit</option><option value="I">Izin</option><option value="A">Alfa</option>
+        </select></div>
+      </div>
+      <button class="btn pink" type="submit" style="width:100%">Kirim presensi</button>
+    </form>
+    <div style="display:grid;gap:20px">
+      <div class="abssum" id="absSum"></div>
+      <div class="sheet"><div class="scroll">
+        <table><thead><tr><th>No</th><th>Nama</th><th>Hadir</th><th>Sakit</th><th>Izin</th><th>Alfa</th><th>Persentase hadir</th></tr></thead>
+        <tbody id="tbRekap"></tbody></table>
+      </div></div>
+      <div class="sheet">
+        <h3 style="padding:11px 13px;background:var(--deep);color:var(--paper);font-size:.98rem">Presensi terakhir masuk</h3>
+        <div id="logAbsen"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap"><p id="footNote">Dikelola pengurus kelas X DKV 1.</p></footer>
+
+<div class="modal" id="mSiswa"><div class="box" role="dialog" aria-modal="true">
+  <h3 id="mSiswaTitle">Tambah siswa</h3>
+  <form id="formSiswa">
+    <div class="row"><label for="sNama">Nama lengkap</label><input class="f" id="sNama" required></div>
+    <div class="row split">
+      <div><label for="sNis">NIS</label><input class="f" id="sNis"></div>
+      <div><label for="sNisn">NISN</label><input class="f" id="sNisn" required></div>
+    </div>
+    <div class="row split">
+      <div><label for="sJk">L/P</label><select class="f" id="sJk"><option value="L">Laki-laki</option><option value="P">Perempuan</option></select></div>
+      <div><label for="sAgama">Agama</label><input class="f" id="sAgama"></div>
+    </div>
+    <div class="row"><label for="sSmp">Asal SMP</label><input class="f" id="sSmp"></div>
+    <div class="row split">
+      <div><label for="sCita">Cita-cita</label><input class="f" id="sCita"></div>
+      <div><label for="sHobi">Hobi</label><input class="f" id="sHobi"></div>
+    </div>
+    <div class="row split">
+      <div><label for="sOrtu">Nama orang tua</label><input class="f" id="sOrtu"></div>
+      <div><label for="sLahir">Tanggal lahir</label><input class="f" id="sLahir" type="date"></div>
+    </div>
+    <div class="row"><label for="sAlamat">Tempat tinggal</label><input class="f" id="sAlamat" placeholder="Alamat atau daerah tempat tinggal"></div>
+    <div class="foot"><button class="btn ghost" type="button" data-close="mSiswa">Batal</button><button class="btn" type="submit">Simpan</button></div>
+  </form>
+</div></div>
+
+<div class="modal" id="mBayar"><div class="box" role="dialog" aria-modal="true">
+  <h3>Catat pembayaran kas</h3>
+  <form id="formBayar">
+    <div class="row"><label for="bNama">Nama</label><select class="f" id="bNama" required></select></div>
+    <div class="row split">
+      <div><label for="bBulan">Bulan</label><select class="f" id="bBulan"></select></div>
+      <div><label for="bNominal">Nominal dibayar</label><input class="f" id="bNominal" type="number" min="0" step="1000" value="20000"></div>
+    </div>
+    <p style="font-size:.78rem;opacity:.8;margin:0 0 12px">Nominal ini menimpa catatan bulan tersebut, bukan ditambahkan.</p>
+    <div class="foot"><button class="btn ghost" type="button" data-close="mBayar">Batal</button><button class="btn" type="submit">Simpan</button></div>
+  </form>
+</div></div>
+
+<div class="modal" id="mOut"><div class="box" role="dialog" aria-modal="true">
+  <h3>Tambah pengeluaran</h3>
+  <form id="formOut">
+    <div class="row"><label for="oBarang">Barang atau keperluan</label><input class="f" id="oBarang" required></div>
+    <div class="row split">
+      <div><label for="oJml">Jumlah</label><input class="f" id="oJml" placeholder="1 buah, 2 kotak, …"></div>
+      <div><label for="oHarga">Total harga</label><input class="f" id="oHarga" type="number" min="0" step="1000" required></div>
+    </div>
+    <div class="foot"><button class="btn ghost" type="button" data-close="mOut">Batal</button><button class="btn" type="submit">Simpan</button></div>
+  </form>
+</div></div>
+
+<div class="modal" id="mLock"><div class="box" role="dialog" aria-modal="true">
+  <h3 id="mLockTitle">Verifikasi langkah 1 dari 3</h3>
+  <p style="font-size:.82rem;margin:6px 0 14px;opacity:.85" id="mLockDesc">Mengubah data kelas butuh tiga kata sandi berurutan. Masukkan kata sandi pertama.</p>
+  <div class="steps" id="lockSteps">
+    <span class="step on">1</span><span class="step">2</span><span class="step">3</span>
+  </div>
+  <form id="formLock">
+    <div class="row"><label for="lPass">Kata sandi</label><input class="f" id="lPass" type="password" autocomplete="off" required></div>
+    <div class="foot"><button class="btn ghost" type="button" data-close="mLock">Batal</button><button class="btn" type="submit" id="lNext">Lanjut</button></div>
+  </form>
+</div></div>
+
+<div class="modal" id="mDetail"><div class="box" role="dialog" aria-modal="true">
+  <h3 id="dTitle"></h3>
+  <div id="dBody" style="margin-top:14px"></div>
+  <div class="foot"><button class="btn ghost" type="button" data-close="mDetail">Tutup</button><button class="btn" type="button" id="dEdit">Ubah data</button></div>
+</div></div>
+
+<div class="modal" id="mTugas"><div class="box" role="dialog" aria-modal="true">
+  <h3>Tugas</h3>
+  <p class="tsub">Klik tugas untuk melihat keterangannya.</p>
+  <div id="tugasList"></div>
+  <div class="foot"><button class="btn ghost" type="button" data-close="mTugas">Tutup</button><button class="btn" type="button" id="btnTugasBaru">Tambah tugas</button></div>
+</div></div>
+
+<div class="modal" id="mTugasForm"><div class="box" role="dialog" aria-modal="true">
+  <h3>Tambah tugas</h3>
+  <form id="formTugas">
+    <div class="row"><label for="tJudul">Judul tugas</label><input class="f" id="tJudul" required></div>
+    <div class="row split">
+      <div><label for="tMapel">Mata pelajaran</label><input class="f" id="tMapel"></div>
+      <div><label for="tTenggat">Tenggat</label><input class="f" id="tTenggat" type="date" required></div>
+    </div>
+    <div class="row"><label for="tIsi">Keterangan</label><textarea class="f" id="tIsi"></textarea></div>
+    <div class="foot"><button class="btn ghost" type="button" data-close="mTugasForm">Batal</button><button class="btn" type="submit">Simpan</button></div>
+  </form>
+</div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ============ data awal ============ */
+var IURAN = 20000;
+var BULAN = ["agustus","september","oktober","november"];
+var LB = {agustus:"Agustus",september:"September",oktober:"Oktober",november:"November"};
+
+/* nis, nisn, nama, jk, agama, smp, cita, hobi, agu, sep, okt, nov */
+var SEED = [
+["2615001","0109015602","Adelia Salwa Utomo Putri","P","Islam","SMPN 25 Batam","Ilustrator","Menggambar",20000,20000,0,0],
+["2615002","0115844913","Aiera Triestia Khaliqa Larasati","P","Islam","SMPN 57 Batam","Punya rumah dan kerja ke Swiss","Menggambar, kerajinan, dengar musik",20000,0,0,0],
+["2615003","0109864040","Airra Syahquita Azhani","P","Islam","SMPN 3 Batam","Desainer","Gambar, baca, musik, menulis cerita",20000,20000,0,0],
+["2615004","0113971422","Asyubli","L","Islam","SMPN 1 Peureulak","Kaya","Tiduran",20000,20000,10000,0],
+["2615005","0101144861","Alvin Junior","L","-","-","-","-",0,0,0,0],
+["2615007","0107612126","Bernice Lim","P","Islam","SMPN 25 Batam","Ilustrator, animator","Menggambar, membuat kerajinan",20000,20000,0,0],
+["2615008","0109866053","Dedi Ramadan","L","-","-","-","-",1000,0,0,0],
+["2615009","0118800568","Dhivana Ananda Imsya","P","-","-","-","-",20000,1000,0,0],
+["2615010","0103166831","Ekha Ramadhani","L","Islam","SMPN 20 Batam","Engineering pesawat","Futsal",20000,0,0,0],
+["2615011","0107115540","Fajri Agusti","L","Islam","SMPN 20 Batam","Naik haji","Jalan-jalan",20000,1000,0,0],
+["2615012","0101591128","Firrena Eka Putri","P","Islam","SMPN 3 Batam","Arsitek","Olahraga",20000,6000,0,0],
+["2615013","0107436653","Gza Sartiwi","P","Islam","SMPN 3 Batam","Dokter","Menyanyi",20000,10000,0,0],
+["2615014","0103534618","Hussna Zulaikha","P","Islam","SMPN 20 Batam","Pengusaha","Voli",20000,10000,0,0],
+["2615015","0103822277","Indah Nurafifah Ismanda","P","Islam","SMPN 47 Batam","Kerja di PT","Bernyanyi",20000,20000,0,0],
+["2615016","3109467098","Kamilia Izatul","P","Islam","SMPN 3 Batam","Pengusaha","Menyanyi",5000,0,0,0],
+["2615017","3103475146","Kharena Maha Rani","P","Islam","MTs Al-Muttaqin","Guru","Menyanyi",20000,0,0,0],
+["2615018","0115962499","Latifah Asmi","P","Islam","SMPN 3 Batam","Belum tahu","Silat",20000,20000,0,0],
+["2615019","3096951409","Muhamad Ikbal Laja","L","Islam","SMPN 25 Batam","Pemain timnas","Sepak bola",5000,0,0,0],
+["2615020","0105149515","M. Fahrul Ozi","L","Islam","PPS Insanul Madani NW","Bos","Main catur",20000,0,0,0],
+["2615021","3113181121","Melani Aulya Putri","P","Islam","SMPN 3 Batam","Dokter","Badminton",20000,20000,0,0],
+["2615022","0111949058","Mira Jelita","P","Islam","MTsN 2 Batam","Welder","Memasak",9000,0,0,0],
+["2615023","0119379529","Muhamad Aditya Vernando","L","Islam","PKBM Zam Zam Darussalam","Pengusaha kantoran","Main bola",20000,10000,0,0],
+["2615024","0108879905","Muhammad Alfin Syarif","L","Islam","SMP Islam An Nahdhah","Welder","Futsal",15000,0,0,0],
+["2615025","0108382494","Muhammad Habib Ali","L","-","-","-","-",1000,0,0,0],
+["2615026","0118941178","Nadien Adellia Harahap","P","Islam","SMPN 3 Batam","Atletik","Basket",20000,20000,0,0],
+["2615027","0098435607","Nuzul Rizki Ramadhan","L","Islam","SMPN 25 Batam","CEO","Baca buku",20000,0,0,0],
+["2615028","0105479069","Nabila Zaskya","P","-","-","-","-",0,0,0,0],
+["2615029","0117596977","Natasya Intan Khairuni","P","Islam","SMPN 55 Batam","Sesuai mood","DIY",20000,5000,0,0],
+["2615030","0118304396","Reika Fadilah","L","-","-","-","-",4000,0,0,0],
+["2615031","0108141576","Safira Nurul Rahma Dining Tiyas","P","Islam","SMPN 25 Batam","CEO","Dengar musik, main game",20000,0,0,0],
+["2615032","0105172958","Salsabila Fitriani","P","Islam","SMPN 57 Batam","Punya Florist & Bakery Cafe","Dansa dan membaca",20000,5000,0,0],
+["2615033","0104826876","Salwa Atsilah Shafa","P","Islam","SMPN 3 Batam","Perawat","Memasak",20000,20000,0,0],
+["2615034","0118553583","Sandya Zikra Ayyasy","L","Islam","Ponpes Daarul Hikam","Juragan","Berenang",20000,0,0,0],
+["2615035","0084801157","Vahri Fiyansyach Pratama","L","Islam","SMPN 41 Batam","Pengusaha","Futsal",2000,0,0,0],
+["2615036","0117970898","Zilpina Apriyanti","P","Islam","MTsN 4 Kuningan","Polwan","Main bola",20000,0,0,0],
+["2615037","3104388145","Maha Kasih Amelya","P","Islam","SMPN 25 Batam","Atlet voli","Tidur",0,0,0,0],
+["2615038","0105543132","Zahira Regina Putri","P","Islam","Ponpes Tahfidz Wal Lughoh Ruhul Qur'an","Dokter","Mendengar lagu",0,0,0,0],
+["2615039","0117096051","Fakhira Azahra","P","Islam","SMPN 3 Batam","Pramugari","Mendengarkan musik",0,0,0,0]
+];
+var SEED_OUT = [
+["Sapu","1 buah",37000],["Serokan","1 buah",43000],["Air Sanford kotak","2 kotak",48000],
+["Air Mindy kotak","2 kotak",40000],["Laminating","2 lembar",10000],["Uang kue Maulid","-",25000]
+];
+
+var JAM = ["07.00–07.40","07.40–08.20","08.20–09.00","09.00–09.40","10.00–10.40","10.40–11.20","11.20–12.00","12.50–13.30","13.30–14.10","14.10–14.50","14.50–15.30"];
+/* [jam mulai, jam selesai, mapel, guru] */
+var JADWAL = {
+  ganjil:{
+    Senin:[[1,1,"Upacara","Pembina"],[2,4,"IPAS","Bu Aqsa"],[5,8,"Informatika","Pak David"],[9,11,"DDPK","Pak David"]],
+    Selasa:[[1,3,"IPAS","Bu Aqsa"],[4,5,"KKA","Pak Robi"],[6,8,"DDPK","Pak David"],[9,11,"DDPK","Pak David"]],
+    Rabu:[[1,3,"IPAS","Bu Aqsa"],[4,4,"Wali kelas","Bu Anah"],[5,10,"DDPK","Pak David"],[11,11,"Pramuka","Pembina Pramuka"]],
+    Kamis:[[1,1,"Senam","OR"],[2,4,"IPAS","Bu Aqsa"],[5,7,"DDPK","Pak David"],[8,11,"Informatika","Pak David"]],
+    Jumat:[[1,1,"Bimbingan pribadi","GA"],[2,3,"DDPK","Pak David"],[4,5,"SI","Pak Anta"],[6,7,"KKA","Pak Robi"],[8,11,"Pulang","-"]]
+  },
+  genap:{
+    Senin:[[1,1,"Upacara","Pembina"],[2,3,"SI","Pak Anta"],[4,7,"Matematika","Bu Anah"],[8,9,"Seni Budaya","Pak Beni"],[10,11,"PPKn","Pak Oskar"]],
+    Selasa:[[1,4,"Matematika","Bu Anah"],[5,5,"Bimbingan Konseling","Bu Dita"],[6,8,"PJOK","Pak Michael"],[9,11,"Bahasa Inggris","Pak Adi S"]],
+    Rabu:[[1,3,"Bahasa Inggris","Pak Adi S"],[4,6,"Pendidikan Agama","Pak Muhdi"],[7,10,"Bahasa Indonesia","Bu Aisyah"],[11,11,"Pramuka","Pembina Pramuka"]],
+    Kamis:[[1,1,"Senam","OR"],[2,4,"Pendidikan Agama","Pak Muhdi"],[5,8,"Bahasa Indonesia","Bu Aisyah"],[9,11,"PJOK","Pak Michael"]],
+    Jumat:[[1,1,"Bimbingan pribadi","GA"],[2,3,"Bahasa Inggris","Pak Adi S"],[4,5,"PPKn","Pak Oskar"],[6,7,"Seni Budaya","Pak Beni"],[8,11,"Pulang","-"]]
+  }
+};
+
+/* ============ state ============ */
+var S = {siswa:[], abs:{}, out:[], tugas:[]};
+var ROLE = "", USER = "";
+try{ ROLE = sessionStorage.getItem("xdkv1.role")||""; USER = sessionStorage.getItem("xdkv1.user")||""; }catch(e){}
+var db = null, canWrite = true, LOCAL = true;
+var KEY = "xdkv1.local.v2";
+
+function $(s){ return document.querySelector(s); }
+function esc(t){ return String(t==null?"":t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+function rp(n){ return "Rp " + Number(n||0).toLocaleString("id-ID"); }
+function toast(m){ var t=$("#toast"); t.textContent=m; t.classList.add("on"); clearTimeout(t._i); t._i=setTimeout(function(){t.classList.remove("on");},2800); }
+function pad(n){ return n<10 ? "0"+n : ""+n; }
+function today(){ var d=new Date(); return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()); }
+
+function seedState(){
+  S.siswa = SEED.map(function(r,i){
+    return {id:"s"+pad(i+1), no:i+1, nis:r[0], nisn:r[1], nama:r[2], jk:r[3], agama:r[4], smp:r[5], cita:r[6], hobi:r[7],
+            kas:{agustus:r[8], september:r[9], oktober:r[10], november:r[11]}};
+  });
+  S.out = SEED_OUT.map(function(r,i){ return {id:"o"+pad(i+1), barang:r[0], jml:r[1], total:r[2]}; });
+  S.abs = {};
+}
+
+/* ============ perbaikan biodata (sekali jalan) ============
+   Mencocokkan biodata (nama, NISN, L/P, agama, SMP, cita-cita, hobi) dengan data asli di SEED,
+   berdasarkan NIS. Kas dan presensi TIDAK disentuh. Siswa yang hilang dikembalikan supaya tetap 38. */
+var FIX_KEY = "fix_biodata_v3";
+function hitungFix(list){
+  var ubah = [], tambah = [], byNis = {};
+  list.forEach(function(x){ if(x && x.nis && x.nis!=="-" && !byNis[x.nis]) byNis[x.nis] = x; });
+  SEED.forEach(function(r,i){
+    var b = {nama:r[2], nisn:r[1], jk:r[3], agama:r[4], smp:r[5], cita:r[6], hobi:r[7]};
+    var s = byNis[r[0]];
+    if(!s){
+      tambah.push({id:"s"+pad(i+1), no:i+1, nis:r[0], nisn:r[1], nama:r[2], jk:r[3], agama:r[4], smp:r[5], cita:r[6], hobi:r[7],
+                   kas:{agustus:r[8], september:r[9], oktober:r[10], november:r[11]}});
+      return;
+    }
+    var d = {}, ada = false;
+    Object.keys(b).forEach(function(k){ if(s[k] !== b[k]){ d[k] = b[k]; ada = true; } });
+    if(ada) ubah.push({id:s.id, diff:d});
+  });
+  return {ubah:ubah, tambah:tambah};
+}
+function perbaikiLokal(){
+  if(S[FIX_KEY]) return;
+  var h = hitungFix(S.siswa);
+  h.ubah.forEach(function(u){ var s = S.siswa.find(function(x){return x.id===u.id;}); if(s) Object.assign(s, u.diff); });
+  h.tambah.forEach(function(t){ S.siswa.push(t); });
+  S.siswa.sort(function(a,b){ return (a.no||0)-(b.no||0); });
+  S[FIX_KEY] = true; saveLocal();
+}
+
+var NIS_KEY = "fix_nis_v4";
+/* daftar resmi kelas: nis, nisn, nama, L/P, agama, nis lama (kalau pernah dicatat berbeda) */
+var DAFTAR = [
+["2615001","0109015602","Adelia Salwa Utomo Putri","P","Islam",""],
+["2615002","0115844913","Aiera Triestia Khaliqa Larasati","P","Islam",""],
+["2615003","0109864040","Airra Syahquita Azhani","P","Islam",""],
+["2615004","0113971422","Asyubli","L","Islam",""],
+["2615005","0101144861","Alvin Junior","L","Islam",""],
+["2615006","0116468430","Andi Wijaya","L","Islam",""],
+["2615007","0107612126","Bernice Lim","P","Islam",""],
+["2615008","0109866053","Dedi Ramadan","L","Islam",""],
+["2615009","0118800568","Dhivana Ananda Imsya","P","Islam",""],
+["2615010","0103166831","Ekha Ramadhani","L","Islam",""],
+["2615011","0107115540","Fajri Agusti","L","Islam",""],
+["2615012","0101591128","Firrena Eka Putri","P","Islam",""],
+["2615013","0107436653","Gza Sartiwi","P","Islam",""],
+["2615014","0103534618","Hussna Zulaikha","P","Islam",""],
+["2615015","0103822277","Indah Nurafifah Ismanda","P","Islam",""],
+["2615016","3109467098","Kamilia Izatul","P","Islam",""],
+["2615017","3103475146","Kharena Maha Rani","P","Islam",""],
+["2615018","0115962499","Latifah Asmi","P","Islam",""],
+["2615019","3096951409","Muhamad Ikbal Laja","L","Islam",""],
+["2615020","0105149515","M. Fahrul Ozi","L","Islam",""],
+["2615021","3113181121","Melani Aulya Putri","P","Islam",""],
+["2615022","0111949058","Mira Jelita","P","Islam",""],
+["2615023","0119379529","Muhamad Aditya Vernando","L","Islam",""],
+["2615024","0108879905","Muhammad Alfin Syarif","L","Islam",""],
+["2615025","0108382494","Muhammad Habib Ali","L","Islam",""],
+["2615026","0118941178","Nadien Adellia Harahap","P","Islam",""],
+["2615027","0098435607","Nuzul Rizki Ramadhan","L","Islam",""],
+["2615028","0105479069","Nabila Zaskya","P","Islam",""],
+["2615029","0117596977","Natasya Intan Khairuni","P","Islam",""],
+["2615030","0118304396","Reika Fadilah","L","Islam",""],
+["2615031","0108141576","Safira Nurul Rahma Dining Tiyas","P","Islam",""],
+["2615032","0105172958","Salsabila Fitriani","P","Islam",""],
+["2615033","0104826876","Salwa Atsilah Shafa","P","Islam",""],
+["2615034","0118553583","Sandya Zikra Ayyasy","L","Islam",""],
+["2615035","0084801157","Vahri Fiyansyach Pratama","L","Islam",""],
+["2615036","0117970898","Zilpina Apriyanti","P","Islam",""],
+["","0117096051","Fakhira Azara","P","Islam","2615039"],
+["","0105543132","Zahira Reginaputri","P","Islam","2615038"],
+["","0115195110","Wendi Susanto","L","-",""],
+["","0107145115","Maha Kasih Ameliya","P","Islam","2615037"]
+];
+function hitungNis(list){
+  var ubah = [], tambah = [];
+  DAFTAR.forEach(function(r,i){
+    var no = i+1;
+    var s = list.find(function(x){
+      return (r[0] && String(x.nis)===r[0]) || String(x.nisn)===r[1] || (r[5] && String(x.nis)===r[5]);
+    });
+    if(s){ ubah.push({id:s.id, diff:{no:no, nis:r[0]||"-", nisn:r[1]}}); }
+    else tambah.push({id:"s"+pad(no)+"n", no:no, nis:r[0]||"-", nisn:r[1], nama:r[2], jk:r[3], agama:r[4], smp:"-", cita:"-", hobi:"-",
+                      ortu:"-", lahir:"", alamat:"-", kas:{agustus:0,september:0,oktober:0,november:0}});
+  });
+  return {ubah:ubah, tambah:tambah};
+}
+function perbaikiNisLokal(){
+  if(S[NIS_KEY]) return;
+  var h = hitungNis(S.siswa);
+  h.ubah.forEach(function(u){ var x = S.siswa.find(function(y){return y.id===u.id;}); if(x) Object.assign(x, u.diff); });
+  h.tambah.forEach(function(t){ S.siswa.push(t); });
+  S.siswa.sort(function(a,b){ return (a.no||0)-(b.no||0); });
+  S[NIS_KEY] = true; saveLocal();
+}
+
+/* ============ penyimpanan ============ */
+function saveLocal(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+function loadLocal(){
+  try{ var raw=localStorage.getItem(KEY); if(raw){ var p=JSON.parse(raw); if(p && p.siswa && p.siswa.length){ S=p; if(!S.abs)S.abs={}; if(!S.out)S.out=[]; if(!S.tugas)S.tugas=[]; return true; } } }catch(e){}
+  return false;
+}
+function bulanKey(tgl){ return tgl.slice(0,7); }
+
+var store = {
+  async saveSiswa(o){
+    if(LOCAL){ var i=S.siswa.findIndex(function(x){return x.id===o.id;}); if(i<0) S.siswa.push(o); else S.siswa[i]=o; saveLocal(); renderAll(); return; }
+    await db.doc("siswa/"+o.id).set(o);
+  },
+  async saveKas(id, bulan, nominal){
+    var s = S.siswa.find(function(x){return x.id===id;}); if(!s) return;
+    var kas = Object.assign({}, s.kas); kas[bulan] = nominal;
+    if(LOCAL){ s.kas = kas; saveLocal(); renderAll(); return; }
+    await db.doc("siswa/"+id).update({kas:kas});
+  },
+  async saveAbsen(id, tgl, status, ket){
+    var bk = bulanKey(tgl), day = tgl.slice(8);
+    if(LOCAL){ S.abs[id]=S.abs[id]||{}; S.abs[id][tgl]={s:status,k:ket}; saveLocal(); renderAll(); return; }
+    var ref = db.doc("absensi/"+id+"_"+bk);
+    var snap = await ref.get();
+    var days = (snap.exists && snap.data().days) ? Object.assign({}, snap.data().days) : {};
+    days[day] = {s:status, k:ket};
+    await ref.set({sid:id, bulan:bk, days:days});
+  },
+  async hapusAbsen(id, tgl){
+    var bk = bulanKey(tgl), day = tgl.slice(8);
+    if(LOCAL){ if(S.abs[id]) delete S.abs[id][tgl]; saveLocal(); renderAll(); return; }
+    var ref = db.doc("absensi/"+id+"_"+bk);
+    var snap = await ref.get(); if(!snap.exists) return;
+    var days = Object.assign({}, snap.data().days||{}); delete days[day];
+    await ref.set({sid:id, bulan:bk, days:days});
+  },
+  async addOut(o){
+    if(LOCAL){ S.out.push(o); saveLocal(); renderAll(); return; }
+    await db.doc("pengeluaran/"+o.id).set(o);
+  },
+  async addTugas(o){
+    if(LOCAL){ S.tugas.push(o); saveLocal(); renderTugas(); return; }
+    await db.doc("tugas/"+o.id).set(o);
+  },
+  async delTugas(id){
+    if(LOCAL){ S.tugas = S.tugas.filter(function(x){return x.id!==id;}); saveLocal(); renderTugas(); return; }
+    await db.doc("tugas/"+id).delete();
+  },
+  async delOut(id){
+    if(LOCAL){ S.out = S.out.filter(function(x){return x.id!==id;}); saveLocal(); renderAll(); return; }
+    await db.doc("pengeluaran/"+id).delete();
+  }
+};
+
+async function tulis(fn, pesanSukses){
+  try{ await fn(); if(pesanSukses) toast(pesanSukses); }
+  catch(e){
+    if(e && e.code === "invalid_argument"){ canWrite=false; toast("Akunmu hanya bisa melihat, belum bisa mengubah data."); }
+    else toast("Gagal menyimpan. Coba lagi sebentar.");
+  }
+}
+
+/* ============ hitung ============ */
+function rekapOf(id){
+  var r = {H:0,S:0,I:0,A:0}, d = S.abs[id]||{};
+  Object.keys(d).forEach(function(t){ var s=d[t].s; if(r[s]!=null) r[s]++; });
+  return r;
+}
+function kurangSampai(s, bulan){
+  var idx = BULAN.indexOf(bulan), k = 0;
+  BULAN.slice(0, idx+1).forEach(function(b){ var v = (s.kas&&s.kas[b])||0; if(v<IURAN) k += IURAN-v; });
+  return k;
+}
+function totalMasuk(){ var t=0; S.siswa.forEach(function(s){ BULAN.forEach(function(b){ t += (s.kas&&s.kas[b])||0; }); }); return t; }
+function totalKeluar(){ var t=0; S.out.forEach(function(o){ t += o.total||0; }); return t; }
+
+/* ============ render ============ */
+function renderSiswa(){
+  var q = ($("#cari").value||"").toLowerCase().trim();
+  var base = ROLE==="siswa" ? S.siswa.filter(function(s){ return String(s.nis)===USER || String(s.nisn)===USER; }) : S.siswa;
+  var rows = base.filter(function(s){
+    if(!q) return true;
+    return [s.nama,s.smp,s.cita,s.hobi,s.nisn,s.agama,s.ortu,s.alamat].join(" ").toLowerCase().indexOf(q) > -1;
+  });
+  var g = $("#gridSiswa");
+  $("#cnt").textContent = ROLE==="siswa" ? "Klik kotak namamu untuk melihat semua datamu." : "Menampilkan " + rows.length + " dari " + S.siswa.length + " siswa. Klik kotak untuk melihat semua datanya.";
+  if(!rows.length){
+    g.innerHTML = '<div class="empty">' + (!S.siswa.length ? "Memuat data…" : (ROLE==="siswa" ? "Datamu belum ditemukan. Hubungi pengurus kelas." : "Tidak ada yang cocok dengan kata itu.")) + '</div>';
+    return;
+  }
+  g.innerHTML = rows.map(function(s,i){
+    var ini = String(s.nama||"?").split(/\s+/).slice(0,2).map(function(w){return w.charAt(0);}).join("").toUpperCase();
+    return '<button class="scard" type="button" data-id="'+esc(s.id)+'"><span class="ava c'+(i%5)+'">'+esc(ini)+'</span><span class="sn">'+esc(s.nama)+'</span></button>';
+  }).join("");
+}
+
+function renderJadwal(){
+  var mg = $("#minggu").value, data = JADWAL[mg];
+  var HARI_INI = ["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"][new Date().getDay()];
+  $("#hari").innerHTML = Object.keys(data).map(function(h,hi){
+    var jm = data[h].filter(function(b){return b[2]!=="Pulang";}).reduce(function(a,b){return a+(b[1]-b[0]+1);},0);
+    var ini = h===HARI_INI;
+    return '<div class="day d'+((hi%5)+1)+(ini?' today':'')+'"><h3><span>'+h+(ini?'<span class="now">Hari ini</span>':'')+'</span><small>'+jm+' JAM</small></h3>' + data[h].map(function(b){
+      var jam = b[0]===b[1] ? ("Jam "+b[0]) : ("Jam "+b[0]+"–"+b[1]);
+      var waktu = JAM[b[0]-1].split("–")[0] + "–" + JAM[b[1]-1].split("–")[1];
+      var kos = b[2]==="Pulang" ? " kosong" : "";
+      return '<div class="slot'+kos+'"><span class="jam">'+jam+'</span><span><b>'+esc(b[2])+'</b><small>'+waktu+(b[3]!=="-"?" · "+esc(b[3]):"")+'</small></span></div>';
+    }).join("") + '</div>';
+  }).join("");
+}
+
+function renderKas(){
+  var sampai = $("#bulan").value || "september";
+  var aktif = BULAN.slice(0, BULAN.indexOf(sampai)+1);
+  $("#thKas").innerHTML = '<th>No</th><th>Nama</th>' + aktif.map(function(b){return '<th>'+LB[b]+'</th>';}).join("") + '<th>Status sampai '+LB[sampai]+'</th>';
+  var sub = 0;
+  $("#tbKas").innerHTML = S.siswa.map(function(s,i){
+    var sel = aktif.map(function(b){
+      var v = (s.kas&&s.kas[b])||0; sub += v;
+      return '<td class="n'+(v>=IURAN?' paid':(v>0?' half':''))+'">'+(v? rp(v) : '<span style="opacity:.45">—</span>')+'</td>';
+    }).join("");
+    var kur = kurangSampai(s, sampai);
+    var st = kur===0 ? '<span class="pill ok">Lunas</span>'
+      : (kur < IURAN*aktif.length ? '<span class="pill part">Kurang '+rp(kur)+'</span>' : '<span class="pill no">Belum bayar</span>');
+    return '<tr><td class="n">'+(i+1)+'</td><td class="nm">'+esc(s.nama)+'</td>'+sel+'<td>'+st+'</td></tr>';
+  }).join("");
+  var tm = totalMasuk(), tk = totalKeluar(), nL = 0;
+  S.siswa.forEach(function(x){ if(kurangSampai(x, sampai)===0) nL++; });
+  var pl = S.siswa.length ? Math.round(nL/S.siswa.length*100) : 0;
+  $("#kasSum").innerHTML = '<div class="kc in"><small>Pemasukan</small><b>'+rp(tm)+'</b></div><div class="kc out"><small>Pengeluaran</small><b>'+rp(tk)+'</b></div><div class="kc sal"><small>Saldo sekarang</small><b>'+rp(tm-tk)+'</b></div>';
+  $("#kasProg").innerHTML = '<div class="pt"><span>Sudah lunas sampai '+LB[sampai]+'</span><span>'+nL+' / '+S.siswa.length+' siswa · '+pl+'%</span></div><div class="pb"><i style="width:'+pl+'%"></i></div>';
+  $("#tfKas").innerHTML = '<tr><td></td><td>Terkumpul sampai '+LB[sampai]+'</td><td class="n" colspan="'+(aktif.length+1)+'">'+rp(sub)+'</td></tr>';
+
+  $("#tbOut").innerHTML = S.out.length ? S.out.map(function(o,i){
+    return '<tr><td class="n">'+(i+1)+'</td><td class="nm">'+esc(o.barang)+'</td><td>'+esc(o.jml||"-")+
+      '</td><td class="n">'+rp(o.total)+
+      '</td><td><button class="link" data-out="'+o.id+'" type="button">Hapus</button></td></tr>';
+  }).join("") : '<tr><td colspan="5" class="empty">Belum ada pengeluaran yang dicatat.</td></tr>';
+  $("#tfOut").innerHTML = '<tr><td></td><td>Total pengeluaran</td><td></td><td class="n">'+rp(totalKeluar())+'</td><td></td></tr>';
+}
+
+function renderAbsSum(){
+  var t = {H:0,S:0,I:0,A:0};
+  S.siswa.forEach(function(x){ var r = rekapOf(x.id); t.H+=r.H; t.S+=r.S; t.I+=r.I; t.A+=r.A; });
+  var nm = {H:"Hadir",S:"Sakit",I:"Izin",A:"Alfa"};
+  $("#absSum").innerHTML = ["H","S","I","A"].map(function(k){ return '<div class="ac '+k+'"><b>'+t[k]+'</b><small>'+nm[k]+'</small></div>'; }).join("");
+}
+function renderRekap(){
+  $("#tbRekap").innerHTML = S.siswa.map(function(s,i){
+    var r = rekapOf(s.id), tot = r.H+r.S+r.I+r.A, p = tot? Math.round(r.H/tot*100):0;
+    return '<tr><td class="n">'+(i+1)+'</td><td class="nm">'+esc(s.nama)+'</td><td class="n">'+r.H+'</td><td class="n">'+r.S+
+      '</td><td class="n">'+r.I+'</td><td class="n">'+r.A+'</td><td><div style="display:flex;align-items:center;gap:8px"><span class="meter"><i class="'+(p>=90?'hi':(p>=75?'mid':'lo'))+'" style="width:'+p+'%"></i></span><span class="n" style="font-size:.79rem;font-weight:600">'+(tot?p+"%":"—")+'</span></div></td></tr>';
+  }).join("");
+}
+
+function semuaLog(){
+  var out = [];
+  S.siswa.forEach(function(s){
+    var d = S.abs[s.id]||{};
+    Object.keys(d).forEach(function(t){ out.push({id:s.id, nama:s.nama, tgl:t, s:d[t].s, k:d[t].k}); });
+  });
+  out.sort(function(a,b){ return a.tgl < b.tgl ? 1 : (a.tgl > b.tgl ? -1 : 0); });
+  return out;
+}
+function renderLog(){
+  var list = semuaLog().slice(0, 15), box = $("#logAbsen");
+  if(!list.length){ box.innerHTML = '<p class="empty">Belum ada presensi yang masuk. Isi formulir di sebelah kiri untuk memulai.</p>'; return; }
+  box.innerHTML = list.map(function(l){
+    var d = new Date(l.tgl+"T00:00:00");
+    var t = isNaN(d) ? l.tgl : d.toLocaleDateString("id-ID",{weekday:"long",day:"numeric",month:"long"});
+    var NM = {H:"Hadir",S:"Sakit",I:"Izin",A:"Alfa"};
+    return '<div class="log"><div class="who2"><span class="badge '+l.s+'">'+l.s+'</span><div><b>'+esc(l.nama)+'</b><small>'+esc(t)+(l.k? " · "+esc(l.k):"")+'</small></div></div>'+
+      '<div style="display:flex;align-items:center;gap:10px"><span class="st '+l.s+'">'+(NM[l.s]||l.s)+'</span>'+
+      '<button class="link" data-del="'+l.id+'|'+l.tgl+'" type="button">Batalkan</button></div></div>';
+  }).join("");
+}
+
+function renderStats(){
+  var sampai = $("#bulan").value || "september", lunas = 0, h=0, all=0;
+  S.siswa.forEach(function(s){
+    if(kurangSampai(s, sampai)===0) lunas++;
+    var r = rekapOf(s.id); h += r.H; all += r.H+r.S+r.I+r.A;
+  });
+  $("#stJml").textContent = S.siswa.length;
+  $("#stKas").textContent = rp(totalMasuk());
+  $("#stSaldo").textContent = rp(totalMasuk()-totalKeluar());
+  $("#stLunas").textContent = lunas + " / " + S.siswa.length;
+  $("#stHadir").textContent = all ? Math.round(h/all*100)+"%" : "—";
+}
+
+function renderPilihan(){
+  var opt = '<option value="">Pilih nama</option>' + S.siswa.map(function(s){
+    return '<option value="'+s.id+'">'+esc(s.nama)+'</option>';
+  }).join("");
+  var a = $("#aNama"), b = $("#bNama"), va = a.value, vb = b.value;
+  a.innerHTML = opt; b.innerHTML = opt; a.value = va; b.value = vb;
+}
+function renderAll(){ renderSiswa(); renderTugas(); renderKas(); renderRekap(); renderAbsSum(); renderLog(); renderPilihan(); renderStats(); }
+
+/* ============ interaksi ============ */
+document.querySelectorAll(".tab").forEach(function(b){
+  b.addEventListener("click", function(){
+    document.querySelectorAll(".tab").forEach(function(x){ x.setAttribute("aria-selected","false"); });
+    document.querySelectorAll(".panel").forEach(function(p){ p.classList.remove("on"); });
+    b.setAttribute("aria-selected","true");
+    $("#p-"+b.dataset.tab).classList.add("on");
+  });
+});
+document.querySelectorAll("[data-close]").forEach(function(b){
+  b.addEventListener("click", function(){ if(b.dataset.close==="mLock") tunda=null; $("#"+b.dataset.close).classList.remove("on"); });
+});
+document.querySelectorAll(".modal").forEach(function(m){
+  m.addEventListener("click", function(e){ if(e.target===m){ if(m.id==="mLock") tunda=null; m.classList.remove("on"); } });
+});
+document.addEventListener("keydown", function(e){
+  if(e.key==="Escape") document.querySelectorAll(".modal").forEach(function(m){ m.classList.remove("on"); });
+});
+
+$("#cari").addEventListener("input", renderSiswa);
+$("#minggu").addEventListener("change", renderJadwal);
+$("#bulan").addEventListener("change", function(){ renderKas(); renderStats(); });
+
+/* ---- kunci edit: verifikasi 3 langkah ---- */
+var SANDI = ["dkv1hebat","dkv1juara","dkv1pastibisa"];
+var buka = false, langkah = 0, tunda = null;
+
+function tandaiLangkah(){
+  var el = document.querySelectorAll("#lockSteps .step");
+  for(var i=0;i<el.length;i++){
+    el[i].className = "step" + (i<langkah ? " done" : (i===langkah ? " on" : ""));
+  }
+  $("#mLockTitle").textContent = "Verifikasi langkah "+(langkah+1)+" dari 3";
+  $("#mLockDesc").textContent = langkah===0
+    ? "Mengubah data kelas butuh tiga kata sandi berurutan. Masukkan kata sandi pertama."
+    : "Benar. Sekarang masukkan kata sandi ke-"+(langkah===1?"dua":"tiga")+".";
+  $("#lNext").textContent = langkah===2 ? "Buka kunci" : "Lanjut";
+}
+function statusTombol(){
+  var b = $("#lockBtn");
+  b.textContent = buka ? "Kunci lagi" : "Buka kunci edit";
+  b.classList.toggle("open", buka);
+}
+function bukaModalKunci(){
+  langkah = 0; $("#lPass").value = ""; tandaiLangkah();
+  $("#mLock").classList.add("on"); setTimeout(function(){ $("#lPass").focus(); }, 30);
+}
+function perluBuka(fn){
+  if(buka){ fn(); return true; }
+  tunda = fn; bukaModalKunci();
+  toast("Edit terkunci. Selesaikan verifikasi 3 langkah dulu.");
+  return false;
+}
+$("#formLock").addEventListener("submit", function(e){
+  e.preventDefault();
+  var v = $("#lPass").value.trim();
+  if(v === SANDI[langkah]){
+    langkah++;
+    $("#lPass").value = "";
+    if(langkah < 3){ tandaiLangkah(); $("#lPass").focus(); return; }
+    buka = true; langkah = 0;
+    try{ sessionStorage.setItem(KEY+".unlock","1"); }catch(err){}
+    $("#mLock").classList.remove("on");
+    statusTombol();
+    toast("Kunci terbuka. Sekarang data bisa diubah.");
+    if(tunda){ var f = tunda; tunda = null; f(); }
+  } else {
+    langkah = 0; $("#lPass").value = ""; tandaiLangkah();
+    var box = $("#mLock").querySelector(".box");
+    box.classList.remove("shake"); void box.offsetWidth; box.classList.add("shake");
+    toast("Kata sandi salah. Ulangi dari langkah 1.");
+    $("#lPass").focus();
+  }
+});
+$("#lockBtn").addEventListener("click", function(){
+  if(buka){
+    buka = false; tunda = null;
+    try{ sessionStorage.removeItem(KEY+".unlock"); }catch(err){}
+    statusTombol(); toast("Edit dikunci lagi.");
+    return;
+  }
+  bukaModalKunci();
+});
+try{ if(sessionStorage.getItem(KEY+".unlock")==="1") buka = true; }catch(e){}
+statusTombol();
+
+var editId = null;
+$("#btnSiswa").addEventListener("click", function(){
+  perluBuka(function(){
+    editId = null; $("#mSiswaTitle").textContent = "Tambah siswa"; $("#sNis").disabled = false; $("#sNisn").disabled = false; $("#formSiswa").reset(); $("#mSiswa").classList.add("on"); $("#sNama").focus();
+  });
+});
+var detailId = null;
+var NAMA_BULAN = ["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
+function tglID(iso){
+  if(!iso) return ""; var p = String(iso).split("-");
+  if(p.length<3 || !NAMA_BULAN[Number(p[1])-1]) return String(iso);
+  return Number(p[2]) + " " + NAMA_BULAN[Number(p[1])-1] + " " + p[0];
+}
+function bukaDetail(id){
+  var s = S.siswa.find(function(x){return x.id===id;}); if(!s) return;
+  if(ROLE==="siswa" && !(String(s.nis)===USER || String(s.nisn)===USER)) return;
+  detailId = id;
+  function v(x){ return (x && x!=="-") ? esc(x) : '<span style="opacity:.45">Belum diisi</span>'; }
+  var jk = String(s.jk||"").trim().toUpperCase().charAt(0)==="P" ? "Perempuan" : "Laki-laki";
+  var baris = [["NIS",s.nis],["NISN",s.nisn],["Jenis kelamin",jk],["Tanggal lahir",tglID(s.lahir)],["Agama",s.agama],["Asal SMP",s.smp],
+               ["Nama orang tua",s.ortu],["Tempat tinggal",s.alamat],["Cita-cita",s.cita],["Hobi",s.hobi]];
+  $("#dTitle").textContent = s.nama;
+  $("#dBody").innerHTML = '<dl class="dl">' + baris.map(function(r){ return '<dt>'+r[0]+'</dt><dd>'+v(r[1])+'</dd>'; }).join("") + '</dl>';
+  $("#dEdit").style.display = "";
+  $("#mDetail").classList.add("on");
+}
+$("#gridSiswa").addEventListener("click", function(e){
+  var b = e.target.closest ? e.target.closest(".scard") : null; if(b) bukaDetail(b.getAttribute("data-id"));
+});
+$("#dEdit").addEventListener("click", function(){
+  var id = detailId; $("#mDetail").classList.remove("on");
+  if(ROLE==="siswa") bukaFormSiswa(id); else perluBuka(function(){ bukaFormSiswa(id); });
+});
+if(ROLE==="siswa"){ $("#btnSiswa").style.display = "none"; $("#cari").style.display = "none"; }
+
+/* ---- tugas ---- */
+function selisihHari(iso){
+  var a = new Date(iso+"T00:00:00"), n = new Date(); n.setHours(0,0,0,0);
+  return Math.round((a-n)/86400000);
+}
+function renderTugas(){
+  var list = (S.tugas||[]).slice().sort(function(a,b){ return String(a.tenggat).localeCompare(String(b.tenggat)); });
+  var aktif = list.filter(function(t){ return selisihHari(t.tenggat)>=0; }).length;
+  $("#tugasBtn").textContent = "Tugas" + (aktif ? " ("+aktif+")" : "");
+  var box = $("#tugasList");
+  if(!list.length){ box.innerHTML = '<div class="empty">Belum ada tugas.</div>'; return; }
+  box.innerHTML = list.map(function(t){
+    var d = selisihHari(t.tenggat);
+    var st = d<0 ? '<span class="pill no">Lewat</span>' : (d===0 ? '<span class="pill part">Hari ini</span>' : '<span class="pill ok">'+d+' hari lagi</span>');
+    return '<div class="titem"><button class="thead" type="button" aria-expanded="false"><span><b>'+esc(t.judul)+'</b><small>'+esc(t.mapel||"-")+' · '+esc(tglID(t.tenggat))+'</small></span>'+st+'</button>'+
+      '<div class="tdet" hidden><p>'+esc(t.isi||"Tidak ada keterangan.")+'</p>'+(ROLE==="admin" ? '<button class="link" type="button" data-del="'+esc(t.id)+'">Hapus tugas</button>' : '')+'</div></div>';
+  }).join("");
+}
+function bukaTugas(){ renderTugas(); $("#mTugas").classList.add("on"); }
+$("#tugasBtn").addEventListener("click", bukaTugas);
+$("#tugasList").addEventListener("click", function(e){
+  var del = e.target.getAttribute && e.target.getAttribute("data-del");
+  if(del){
+    perluBuka(function(){ if(confirm("Hapus tugas ini?")) tulis(function(){ return store.delTugas(del); }, "Tugas dihapus."); });
+    return;
+  }
+  var h = e.target.closest ? e.target.closest(".thead") : null; if(!h) return;
+  var det = h.nextElementSibling, buka2 = det.hidden;
+  det.hidden = !buka2; h.setAttribute("aria-expanded", buka2 ? "true" : "false");
+});
+if(ROLE!=="admin") $("#btnTugasBaru").style.display = "none";
+$("#btnTugasBaru").addEventListener("click", function(){
+  perluBuka(function(){ $("#formTugas").reset(); $("#mTugas").classList.remove("on"); $("#mTugasForm").classList.add("on"); $("#tJudul").focus(); });
+});
+$("#formTugas").addEventListener("submit", function(e){
+  e.preventDefault();
+  var o = {id:"t"+Date.now().toString(36), judul:$("#tJudul").value.trim(), mapel:$("#tMapel").value.trim(), tenggat:$("#tTenggat").value, isi:$("#tIsi").value.trim()};
+  $("#mTugasForm").classList.remove("on");
+  tulis(function(){ return store.addTugas(o); }, "Tugas ditambahkan.");
+  setTimeout(bukaTugas, 150);
+});
+try{ if(sessionStorage.getItem("xdkv1.tugas")==="1"){ sessionStorage.removeItem("xdkv1.tugas"); setTimeout(bukaTugas, 500); } }catch(e){}
+function bukaFormSiswa(id){
+  var s = S.siswa.find(function(x){return x.id===id;}); if(!s) return;
+  if(ROLE==="siswa" && !(String(s.nis)===USER || String(s.nisn)===USER)) return;
+  editId = id; $("#mSiswaTitle").textContent = "Ubah data siswa";
+  $("#sNis").value = (s.nis && s.nis!=="-") ? s.nis : "";
+  $("#sNis").disabled = (ROLE==="siswa"); $("#sNisn").disabled = (ROLE==="siswa");
+  $("#sNama").value=s.nama; $("#sNisn").value=s.nisn; $("#sJk").value=String(s.jk||"").trim().toUpperCase().charAt(0)==="P"?"P":"L";
+  $("#sAgama").value=s.agama==="-"?"":s.agama; $("#sSmp").value=s.smp==="-"?"":s.smp;
+  $("#sCita").value=s.cita==="-"?"":s.cita; $("#sHobi").value=s.hobi==="-"?"":s.hobi;
+  $("#sOrtu").value=(s.ortu&&s.ortu!=="-")?s.ortu:""; $("#sLahir").value=s.lahir||""; $("#sAlamat").value=(s.alamat&&s.alamat!=="-")?s.alamat:"";
+  $("#mSiswa").classList.add("on");
+}
+$("#formSiswa").addEventListener("submit", function(e){
+  e.preventDefault();
+  var lama = editId ? S.siswa.find(function(x){return x.id===editId;}) : null;
+  if(ROLE==="siswa" && (!lama || !(String(lama.nis)===USER || String(lama.nisn)===USER))) return;
+  var id = editId || ("s"+pad(S.siswa.length+1)+"x"+Date.now().toString(36).slice(-4));
+  var o = {
+    id:id, no: lama? lama.no : S.siswa.length+1, nis: $("#sNis").value.trim()||"-",
+    nama:$("#sNama").value.trim(), nisn:$("#sNisn").value.trim(), jk:$("#sJk").value,
+    agama:$("#sAgama").value.trim()||"-", smp:$("#sSmp").value.trim()||"-",
+    cita:$("#sCita").value.trim()||"-", hobi:$("#sHobi").value.trim()||"-",
+    ortu:$("#sOrtu").value.trim()||"-", lahir:$("#sLahir").value||"", alamat:$("#sAlamat").value.trim()||"-",
+    kas: lama? lama.kas : {agustus:0,september:0,oktober:0,november:0}
+  };
+  $("#mSiswa").classList.remove("on");
+  tulis(function(){ return store.saveSiswa(o); }, editId? "Data "+o.nama.split(" ")[0]+" diperbarui." : o.nama.split(" ")[0]+" ditambahkan.");
+});
+
+$("#btnBayar").addEventListener("click", function(){ perluBuka(function(){ $("#mBayar").classList.add("on"); }); });
+$("#formBayar").addEventListener("submit", function(e){
+  e.preventDefault();
+  var id = $("#bNama").value, bulan = $("#bBulan").value, nom = Number($("#bNominal").value||0);
+  if(!id){ toast("Pilih nama dulu."); return; }
+  var s = S.siswa.find(function(x){return x.id===id;});
+  $("#mBayar").classList.remove("on");
+  tulis(function(){ return store.saveKas(id, bulan, nom); }, "Kas "+LB[bulan]+" "+s.nama.split(" ")[0]+" dicatat "+rp(nom)+".");
+});
+
+$("#btnOut").addEventListener("click", function(){ perluBuka(function(){ $("#mOut").classList.add("on"); }); });
+$("#formOut").addEventListener("submit", function(e){
+  e.preventDefault();
+  var o = {id:"o"+Date.now().toString(36), barang:$("#oBarang").value.trim(), jml:$("#oJml").value.trim()||"-", total:Number($("#oHarga").value||0)};
+  $("#mOut").classList.remove("on"); $("#formOut").reset();
+  tulis(function(){ return store.addOut(o); }, "Pengeluaran dicatat.");
+});
+$("#tbOut").addEventListener("click", function(e){
+  var id = e.target.getAttribute && e.target.getAttribute("data-out"); if(!id) return;
+  perluBuka(function(){ tulis(function(){ return store.delOut(id); }, "Pengeluaran dihapus."); });
+});
+
+$("#formAbsen").addEventListener("submit", function(e){
+  e.preventDefault();
+  var id = $("#aNama").value, tgl = $("#aTgl").value, st = $("#aStatus").value, ket = "";
+  if(!id){ toast("Pilih namamu dulu."); return; }
+  if(!tgl){ toast("Isi tanggalnya dulu."); return; }
+  var s = S.siswa.find(function(x){return x.id===id;});
+  var sudah = S.abs[id] && S.abs[id][tgl];
+  tulis(function(){ return store.saveAbsen(id, tgl, st, ket); },
+    (sudah? "Presensi diperbarui: " : "Presensi tersimpan: ") + s.nama.split(" ")[0] + " — " + $("#aStatus").selectedOptions[0].text + ".");
+});
+$("#logAbsen").addEventListener("click", function(e){
+  var v = e.target.getAttribute && e.target.getAttribute("data-del"); if(!v) return;
+  var p = v.split("|");
+  perluBuka(function(){ tulis(function(){ return store.hapusAbsen(p[0], p[1]); }, "Presensi dibatalkan."); });
+});
+
+$("#themeBtn").addEventListener("click", function(){
+  var now = document.documentElement.getAttribute("data-theme");
+  var next = now === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  try{ localStorage.setItem(KEY+".theme", next); }catch(err){}
+});
+
+/* ============ start ============ */
+try{ var th = localStorage.getItem(KEY+".theme"); if(th) document.documentElement.setAttribute("data-theme", th); }catch(e){}
+
+$("#bulan").innerHTML = BULAN.map(function(b){ return '<option value="'+b+'"'+(b==="september"?" selected":"")+'>Sampai '+LB[b]+'</option>'; }).join("");
+$("#bBulan").innerHTML = BULAN.map(function(b){ return '<option value="'+b+'"'+(b==="september"?" selected":"")+'>'+LB[b]+'</option>'; }).join("");
+$("#aTgl").value = today();
+
+if(!loadLocal()) seedState();
+perbaikiLokal();
+perbaikiNisLokal();
+renderJadwal();
+renderAll();
+
+/* database bersama, kalau tersedia */
+(async function(){
+  try{ db = await claude.use("db"); }catch(e){ db = null; }
+  if(!db){ $("#footNote").textContent = "Mode lokal: perubahan hanya tersimpan di perangkat ini."; return; }
+  LOCAL = false;
+
+  try{
+    var snap = await db.collection("siswa").limit(1).get();
+    if(snap.empty){
+      var lease = await db.doc("meta/seed").acquire({holder:"seeder", ttlMs:60000});
+      if(lease.acquired){
+        seedState();
+        for(var i=0;i<S.siswa.length;i++){ await db.doc("siswa/"+S.siswa[i].id).set(S.siswa[i]); }
+        for(var j=0;j<S.out.length;j++){ await db.doc("pengeluaran/"+S.out[j].id).set(S.out[j]); }
+      }
+    }
+  }catch(e){
+    if(e && e.code === "invalid_argument"){ canWrite = false; }
+  }
+
+  try{
+    var fx = await db.doc("meta/"+FIX_KEY).get();
+    if(!fx.exists){
+      var all = await db.collection("siswa").get();
+      var h = hitungFix(all.docs.map(function(d){ return d.data(); }));
+      for(var u=0;u<h.ubah.length;u++){ await db.doc("siswa/"+h.ubah[u].id).update(h.ubah[u].diff); }
+      for(var t=0;t<h.tambah.length;t++){ await db.doc("siswa/"+h.tambah[t].id).set(h.tambah[t]); }
+      await db.doc("meta/"+FIX_KEY).set({done:true, at:Date.now()});
+    }
+  }catch(e){
+    if(e && e.code === "invalid_argument"){ canWrite = false; }
+  }
+
+  try{
+    var fn = await db.doc("meta/"+NIS_KEY).get();
+    if(!fn.exists){
+      var semua = await db.collection("siswa").get();
+      var hn = hitungNis(semua.docs.map(function(d){ return d.data(); }));
+      for(var a=0;a<hn.ubah.length;a++){ await db.doc("siswa/"+hn.ubah[a].id).update(hn.ubah[a].diff); }
+      for(var b=0;b<hn.tambah.length;b++){ await db.doc("siswa/"+hn.tambah[b].id).set(hn.tambah[b]); }
+      await db.doc("meta/"+NIS_KEY).set({done:true, at:Date.now()});
+    }
+  }catch(e){
+    if(e && e.code === "invalid_argument"){ canWrite = false; }
+  }
+
+  db.collection("siswa").onSnapshot(function(q){
+    S.siswa = q.docs.map(function(d){ return d.data(); }).sort(function(a,b){ return (a.no||0)-(b.no||0); });
+    renderAll();
+  }, function(){ $("#footNote").textContent = "Koneksi database terputus. Muat ulang halaman untuk menyambung lagi."; });
+
+  db.collection("pengeluaran").onSnapshot(function(q){
+    S.out = q.docs.map(function(d){ return d.data(); });
+    renderKas(); renderStats();
+  });
+
+  db.collection("tugas").onSnapshot(function(q){ S.tugas = q.docs.map(function(d){ return d.data(); }); renderTugas(); });
+
+  db.collection("absensi").onSnapshot(function(q){
+    var a = {};
+    q.docs.forEach(function(d){
+      var v = d.data(); if(!v || !v.sid) return;
+      a[v.sid] = a[v.sid] || {};
+      Object.keys(v.days||{}).forEach(function(day){ a[v.sid][v.bulan+"-"+day] = v.days[day]; });
+    });
+    S.abs = a; renderRekap(); renderLog(); renderStats();
+  });
+
+  $("#footNote").textContent = "Data tersimpan di database bersama — semua yang membuka halaman ini melihat isi yang sama.";
+})();
+
+})();
+
+/* ============ musik latar ============ */
+document.addEventListener("DOMContentLoaded", function(){
+  var bgm = document.getElementById("bgm"), btn = document.getElementById("musicBtn"), lb = document.getElementById("musicLb");
+  var prevB = document.getElementById("prevBtn"), nextB = document.getElementById("nextBtn");
+  var ctx = null, timer = null, step = 0, nextT = 0, master = null, drum = null, bassBus = null, chordBus = null, leadBus = null, dl = null, noiseBuf = null;
+  var playing = false, cur = 0, fileAdded = false;
+  bgm.volume = 0.5;
+
+  function hz(m){ return 440*Math.pow(2,(m-69)/12); }
+  function env(g, t, atk, dur, vol){
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t+atk);
+    g.gain.exponentialRampToValueAtTime(0.0001, t+dur);
+  }
+  function voice(type, m, t, dur, vol, dest, det, atk){
+    var o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = type; o.frequency.value = hz(m); if(det) o.detune.value = det;
+    env(g, t, atk||0.006, dur, vol);
+    o.connect(g); g.connect(dest); o.start(t); o.stop(t+dur+0.05);
+  }
+  function kick(t, vol, f0, f1, len){
+    var o = ctx.createOscillator(), g = ctx.createGain();
+    o.type = "sine"; o.frequency.setValueAtTime(f0, t); o.frequency.exponentialRampToValueAtTime(f1, t+len*0.5);
+    env(g, t, 0.004, len, vol);
+    o.connect(g); g.connect(drum); o.start(t); o.stop(t+len+0.05);
+  }
+  function noise(t, dur, vol, ftype, freq){
+    var src = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain();
+    src.buffer = noiseBuf; f.type = ftype; f.frequency.value = freq;
+    env(g, t, 0.002, dur, vol);
+    src.connect(f); f.connect(g); g.connect(drum); src.start(t, Math.random()*0.5); src.stop(t+dur+0.05);
+  }
+  function lead(list, beat, fn){ list.forEach(function(x){ if(x[0] === beat) fn(x[1], x); }); }
+
+  var SONGS = [];
+
+  /* 1. City Pop Ceria — 100 BPM, Fmaj7 G7 Em7 Am7 */
+  (function(){
+    var CH = [{r:41,t:[57,60,64,65]},{r:43,t:[59,62,65,67]},{r:40,t:[59,62,64,67]},{r:45,t:[57,60,64,67]}];
+    var LD = [
+      [[0,76],[3,74],[6,72],[8,74],[10,76],[12,79]],
+      [[0,81],[3,79],[6,76],[8,74],[11,72]],
+      [[0,79],[3,76],[6,74],[8,76],[10,79],[12,81],[14,79]],
+      [[0,76],[4,72],[6,74],[8,72],[12,69]]
+    ];
+    var BASS = {0:0,3:12,6:7,8:0,11:12,14:7}, KICK = {0:1,7:1,8:1,10:1};
+    SONGS.push({name:"City Pop Ceria", step:0.15, swing:0.02, play:function(n,t){
+      var beat = n%16, bar = Math.floor(n/16)%4, ch = CH[bar];
+      if(KICK[beat]) kick(t, 0.75, 150, 42, 0.28);
+      if(beat === 4 || beat === 12) noise(t, 0.16, 0.34, "bandpass", 1900);
+      if(beat%2 === 0) noise(t, beat===14?0.14:0.04, beat===14?0.07:0.055, "highpass", 7500);
+      if(bar === 3 && beat >= 13) noise(t, 0.09, 0.2, "bandpass", 2400);
+      if(BASS[beat] != null){ voice("sawtooth", ch.r+BASS[beat], t, 0.2, 0.22, bassBus); voice("sine", ch.r+BASS[beat], t, 0.24, 0.2, bassBus); }
+      if(beat===0||beat===3||beat===6||beat===10) ch.t.forEach(function(m){ voice("square", m, t, 0.17, 0.026, chordBus, (m%3-1)*6); });
+      lead(LD[bar], beat, function(m){
+        var d = (bar===3 && beat===12) ? 0.6 : 0.24;
+        voice("square", m, t, d, 0.05, leadBus, -5); voice("triangle", m, t, d, 0.07, leadBus, 5);
+      });
+    }});
+  })();
+
+  /* 2. Level 1 · 8-bit — 132 BPM, C G Am F, ala game retro */
+  (function(){
+    var CH = [{r:36,t:[60,64,67,72]},{r:43,t:[59,62,67,71]},{r:45,t:[57,60,64,69]},{r:41,t:[57,60,65,69]}];
+    var LD = [
+      [[0,79],[2,79],[4,76],[6,79],[8,84],[12,79]],
+      [[0,79],[2,79],[4,74],[6,79],[8,83],[12,79]],
+      [[0,81],[2,81],[4,76],[6,81],[8,84],[10,81],[12,79]],
+      [[0,77],[2,81],[4,84],[6,81],[8,79],[12,72]]
+    ];
+    var ARP = [0,1,2,3,2,1,3,1];
+    SONGS.push({name:"Level 1 · 8-bit", step:0.1136, swing:0, play:function(n,t){
+      var beat = n%16, bar = Math.floor(n/16)%4, ch = CH[bar];
+      if(beat === 0 || beat === 8) kick(t, 0.6, 120, 40, 0.16);
+      if(beat === 4 || beat === 12) noise(t, 0.07, 0.22, "highpass", 3000);
+      if(beat%2 === 0){ noise(t, 0.025, 0.04, "highpass", 9000); voice("square", ch.r + ((beat/2)%2 ? 12 : 0), t, 0.1, 0.12, bassBus); }
+      voice("square", ch.t[ARP[beat%8]], t, 0.09, 0.03, chordBus);
+      lead(LD[bar], beat, function(m){ voice("square", m, t, (bar===3&&beat===12)?0.5:0.13, 0.05, leadBus); });
+    }});
+  })();
+
+  /* 3. Lo-fi Sore — 82 BPM, Cmaj7 Am7 Dm7 G7, santai buat belajar */
+  (function(){
+    var CH = [{r:36,t:[59,64,67,72]},{r:45,t:[57,60,64,67]},{r:38,t:[62,65,69,72]},{r:43,t:[59,62,65,67]}];
+    var LD = [
+      [[4,79],[8,76],[12,72]],
+      [[2,76],[6,79],[10,81]],
+      [[4,77],[8,74],[12,77]],
+      [[0,74],[6,71],[10,74],[14,79]]
+    ];
+    SONGS.push({name:"Lo-fi Sore", step:0.1829, swing:0.035, play:function(n,t){
+      var beat = n%16, bar = Math.floor(n/16)%4, ch = CH[bar];
+      if(beat === 0 || beat === 10) kick(t, 0.5, 110, 45, 0.2);
+      if(beat === 4 || beat === 12) noise(t, 0.1, 0.14, "bandpass", 1400);
+      if(beat%2 === 0) noise(t, 0.035, 0.03, "highpass", 8000);
+      if(beat === 0) voice("sine", ch.r, t, 0.9, 0.3, bassBus);
+      if(beat === 6) voice("sine", ch.r+7, t, 0.5, 0.24, bassBus);
+      if(beat === 10) voice("sine", ch.r+12, t, 0.4, 0.22, bassBus);
+      if(beat === 0 || beat === 6 || beat === 10){
+        ch.t.forEach(function(m){ voice("sine", m, t, beat===0?1.3:0.6, 0.045, chordBus, 0, 0.02); voice("triangle", m+12, t, 0.5, 0.012, chordBus, 0, 0.02); });
+      }
+      lead(LD[bar], beat, function(m){ voice("sine", m, t, 1.4, 0.09, leadBus); voice("sine", m+12, t, 0.6, 0.025, leadBus); });
+    }});
+  })();
+
+  /* 4. Pop Semangat — 118 BPM, Am F C G, four-on-the-floor */
+  (function(){
+    var CH = [{r:45,t:[57,60,64,69]},{r:41,t:[57,60,65,69]},{r:36,t:[55,60,64,67]},{r:43,t:[55,59,62,67]}];
+    var LD = [
+      [[0,76],[3,79],[6,81],[8,79],[10,76],[12,81]],
+      [[0,77],[3,81],[6,84],[8,81],[10,77],[12,84]],
+      [[0,76],[3,79],[6,84],[8,83],[10,79],[12,76]],
+      [[0,74],[3,79],[6,83],[8,86],[10,83],[12,79],[14,74]]
+    ];
+    SONGS.push({name:"Pop Semangat", step:0.1271, swing:0, play:function(n,t){
+      var beat = n%16, bar = Math.floor(n/16)%4, ch = CH[bar];
+      if(beat%4 === 0) kick(t, 0.7, 150, 45, 0.14);
+      if(beat === 4 || beat === 12) noise(t, 0.14, 0.3, "bandpass", 1600);
+      if(beat%4 === 2) noise(t, 0.11, 0.07, "highpass", 7000);
+      if(beat%2 === 1) noise(t, 0.03, 0.03, "highpass", 9000);
+      if(beat%4 === 2) voice("sawtooth", ch.r+12, t, 0.11, 0.2, bassBus);
+      if(beat === 0 || beat === 8) voice("sine", ch.r, t, 0.5, 0.26, bassBus);
+      if(beat === 0 || beat === 6 || beat === 10){
+        ch.t.forEach(function(m,i){ voice("sawtooth", m, t, beat===0?0.9:0.2, 0.022, chordBus, (i%2?8:-8)); });
+      }
+      lead(LD[bar], beat, function(m){
+        var d = (bar===3 && beat===14) ? 0.3 : 0.2;
+        voice("sawtooth", m, t, d, 0.04, leadBus, -6); voice("square", m, t, d, 0.03, leadBus, 6);
+      });
+    }});
+  })();
+
+  var tracks = SONGS.slice();
+
+  function sched(){
+    var so = tracks[cur];
+    while(nextT < ctx.currentTime + 0.16){
+      var t = nextT + ((step%2===1) ? so.swing : 0);
+      so.play(step, t); nextT += so.step; step++;
+    }
+  }
+  function startSynth(){
+    var AC = window.AudioContext || window.webkitAudioContext; if(!AC) return false;
+    if(!ctx){
+      ctx = new AC();
+      noiseBuf = ctx.createBuffer(1, ctx.sampleRate*0.6, ctx.sampleRate);
+      var nd = noiseBuf.getChannelData(0); for(var k=0;k<nd.length;k++) nd[k] = Math.random()*2-1;
+      var comp = ctx.createDynamicsCompressor(); comp.threshold.value = -14; comp.ratio.value = 4;
+      master = ctx.createGain(); master.gain.value = 0.75;
+      var lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 9000;
+      lp.connect(comp); comp.connect(master); master.connect(ctx.destination);
+      drum = ctx.createGain(); drum.connect(lp);
+      bassBus = ctx.createBiquadFilter(); bassBus.type = "lowpass"; bassBus.frequency.value = 650; bassBus.connect(lp);
+      chordBus = ctx.createBiquadFilter(); chordBus.type = "lowpass"; chordBus.frequency.value = 2600; chordBus.connect(lp);
+      leadBus = ctx.createGain(); leadBus.connect(lp);
+      dl = ctx.createDelay(1);
+      var fb = ctx.createGain(), wt = ctx.createGain(); fb.gain.value = 0.3; wt.gain.value = 0.3;
+      leadBus.connect(dl); dl.connect(fb); fb.connect(dl); dl.connect(wt); wt.connect(lp);
+    }
+    if(ctx.state === "suspended") ctx.resume();
+    dl.delayTime.value = tracks[cur].step*3;
+    step = 0; nextT = ctx.currentTime + 0.08; sched();
+    if(timer) clearInterval(timer);
+    timer = setInterval(sched, 40);
+    return true;
+  }
+  function stopSynth(){ if(timer){ clearInterval(timer); timer = null; } if(ctx) ctx.suspend(); }
+
+  function say(msg){ if(typeof toast === "function") toast(msg); }
+  function ui(on){
+    playing = on; btn.classList.toggle("on", on);
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+  }
+  function label(){ lb.textContent = tracks[cur].name; btn.title = "Lagu " + (cur+1) + " dari " + tracks.length; }
+  function playCur(){
+    if(tracks[cur].file){
+      var pr = bgm.play();
+      if(pr && pr.then) pr.then(function(){ ui(true); }).catch(function(){ say("File lagu.mp3 tidak bisa diputar."); ui(false); });
+      else ui(true);
+    } else { if(startSynth()) ui(true); else say("Browser ini tidak mendukung musik bawaan."); }
+  }
+  function stopAll(){ bgm.pause(); stopSynth(); ui(false); }
+  function pick(i){
+    var was = playing;
+    if(was) stopAll();
+    cur = (i + tracks.length) % tracks.length;
+    label(); say("♪ " + tracks[cur].name);
+    if(was) playCur();
+  }
+  btn.addEventListener("click", function(){ if(playing) stopAll(); else playCur(); });
+  prevB.addEventListener("click", function(){ pick(cur-1); });
+  nextB.addEventListener("click", function(){ pick(cur+1); });
+
+  /* kalau ada file lagu.mp3 di folder yang sama, jadi lagu pertama */
+  bgm.addEventListener("loadedmetadata", function(){
+    if(fileAdded) return; fileAdded = true;
+    tracks.unshift({name:"Lagu kamu (lagu.mp3)", file:true});
+    if(playing) cur++; else cur = 0;
+    label();
+  });
+  label();
+});
+</script>
+<script>
+(function(){
+"use strict";
+var ADMIN = ["18986b5aad2eee1caf7688345a1bcd79d380bdcd85e9ca9527200f4a98b7625c", "ed93344c6ca80e737bddd8a2482808b1e00100c5e3bb6cb61baf36a852ef31f1", "04e61810780f4c8a71d002e73b47ef5c1e973c74867b8b4e7eb321c392ab7b0e"];
+var SISWA = [
+["2615001","2c109cdf4798241055b4878844e0a17ee457334d63d76e51bd991d0405bc6181"],
+["2615002","3f317a4a4207c0af9b07c01a645900a950f5f1e4f47317f20070ba5bcf973768"],
+["2615003","52f9d4687909b0f1653e926edeb9051ddd11fe2ead99f543450664706417536e"],
+["2615004","61ee19d8fadfd37f755e039ff721d9124a5fba1ee1c2d32cfefa68613d30d1c9"],
+["2615005","f7ea2ceb94ff16ad54ff7dcf872c47d5fe8a7b7cdeebc2af1468b5d738f66927"],
+["2615006","83aea6a46d0bc908196f8591bc255d30dd1e6bfdd7e2e3fbcd88584a6c880eef"],
+["2615007","84540daad48e646ecc239b7041f2d8c6b3f3a2a015f359328ed25f06fcd6c502"],
+["2615008","c05aedb225160f8a2056da89bde36fe6acbaefdb6bf2a14fce5fb9181d93b3a3"],
+["2615009","c0bd6cecd7c002e6cefd77464197de5ede0ad87ff745992639226b8671884124"],
+["2615010","ad281fb7984a9346c3e0b305aac54068e007feb9c0ee6a09012e0ec696e32486"],
+["2615011","fb585e7914455fd7ab25ff33e3005af600bd17044c1523f33e1332e357ccd72a"],
+["2615012","0b05e82cb03d3469faec48ceccabad0d44a42f52ca2d22f7ef9b99f0bd73c0aa"],
+["2615013","f3bfe3ba2d0565aa2a3dbe2ae16855b76ee437d31d496598ed6618d943206384"],
+["2615014","5cd9621c572b72da80e05d5ce95bcb11e9bfbafe8bfcbaead680e943dc5cc897"],
+["2615015","ca58ae7e8bc6606776bd90b693f6e0881645cd6929f67455a3c69ff9666b07a0"],
+["2615016","e1371b50ece39d3eb91b35764e0e530472e406a70d6607683b95f6e4408e591b"],
+["2615017","6010a3e4d9a8a39231f43a9928304ed9ff1b49214b8e1bdec45f4f01628ed68b"],
+["2615018","6137cbcb8c55164e05e3b1d48ef7777aac2bdead47e2ddb0a763f3dce2de6f5d"],
+["2615019","c21aeb46a3b8dd55e7d451d401493299b906e6f4b0cdac7850dc95625150c514"],
+["2615020","6ea7f23d21ee607af5bc1efcc3571f0b40898360082134d5a6a5334cc47c3c89"],
+["2615021","0ebd6f1efbbbd81bacdbb5307e387970f5aa8cc770543c236a04ffeeb0c0d570"],
+["2615022","d578419a3f449f5fa5137e9b1e45058497cbb206e94a14220d2434cdee7f431d"],
+["2615023","8059650ee8794caf3fc7401883dcdc9d096cd741081b9079dcf3957e6d93a7d4"],
+["2615024","5aee94bda5dd63d459e3914762a0d21586e5dc323f3be87eb9011ceb6a9c1cea"],
+["2615025","97f3117f11a07876c6059f2733a0b6d9df42d8ebc090c7d1d0c1f8532358f023"],
+["2615026","6d820c5dffebb01495ebd82be3975ce52bc98b5172cb47a03a9a0974a989433e"],
+["2615027","94742ec2e8966b8cb03fcbc04d524ff06a7474506e419ca0409d15d89bd2a6f3"],
+["2615028","cf7ff1f04e54de156388cf7a957b0481ab63259874404eed225d3834d7c0a1b0"],
+["2615029","d74b532f34e991f916ba85b9cf7b93a68ddf8b91bb5c18f1b43c204b8ac631de"],
+["2615030","39f8cedf1827b83c82488e727b55ce7b9400246e862325cc5620e96d01a66503"],
+["2615031","cacf92c490680b0d169ccec826a476f5778c15e489bac10c639d35eb2a24458a"],
+["2615032","88d134337eb5a586a0eb0c77509e0b7181d6dec65814b51ab7b767d006da20c0"],
+["2615033","ff49842677bc2f41d02719e149d4734fb0d707e9ae7a3d9c6684f86f52459bca"],
+["2615034","5080bbc1531144bf0581544faa318ca44ea569b4b97cc936b5f47b8206cb165e"],
+["2615035","d87da1ccf7bb26b748e1df25194d50014f1ef7f4a849a5ffa4da164cc34655e8"],
+["2615036","ed93da6b8ad51f8ec71dfd85d6f0b0ec1547dbf842be368b206a60b3215a2396"],
+["0117096051","cb19dbdad785ba27c293c835a72cc098dfd6b7e375f393f8a4f956cdfab2afe8"],
+["0105543132","d35c5b4c654d0dd6e0f67f3cbeb187ef6864ca95d89557f5ea8aeff6caf02292"],
+["0115195110","ee8cf2048f32eec80fad5bc5e8a5c9a80ae327f91e7d0b7e834d5f0da5a8c749"],
+["0107145115","f06e3246e0097051e191f3ca2b6430bc8066a1a88ae055afe94c5e87e7207a5a"]
+];
+var UNLOCK = "xdkv1.local.v2.unlock";
+function sha256(t){return crypto.subtle.digest("SHA-256",new TextEncoder().encode(t)).then(function(b){return Array.prototype.map.call(new Uint8Array(b),function(x){return ("0"+x.toString(16)).slice(-2);}).join("");});}
+function $(i){return document.getElementById(i);}
+var err=$("lgErr"), card=$("lgCard"), langkah=0;
+function salah(msg){ err.textContent=msg; card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake"); }
+function tab(admin){
+  $("tabSiswa").setAttribute("aria-selected",admin?"false":"true");
+  $("tabAdmin").setAttribute("aria-selected",admin?"true":"false");
+  $("lgSiswa").hidden=admin; $("lgAdmin").hidden=!admin; err.textContent="";
+  (admin?$("lgA"):$("lgU")).focus();
+}
+$("tabSiswa").addEventListener("click",function(){tab(false);});
+$("tabAdmin").addEventListener("click",function(){tab(true);});
+function masuk(role,user){
+  try{sessionStorage.setItem("xdkv1.auth","1");sessionStorage.setItem("xdkv1.role",role);sessionStorage.setItem("xdkv1.user",user);sessionStorage.setItem("xdkv1.tugas","1");}catch(x){}
+  if(role==="admin"){ try{sessionStorage.setItem(UNLOCK,"1");}catch(x){} }
+  location.reload();
+}
+$("lgSiswa").addEventListener("submit",function(e){
+  e.preventDefault(); err.textContent="";
+  var u=$("lgU").value.trim().toLowerCase(), p=$("lgP").value.trim();
+  sha256(u+":"+p).then(function(h){
+    if(SISWA.some(function(a){return a[0]===u&&a[1]===h;})) masuk("siswa",u);
+    else { salah("NIS atau kata sandi salah."); $("lgP").select(); }
+  }).catch(function(){salah("Browser ini tidak mendukung login. Buka lewat alamat https.");});
+});
+function tandai(){
+  var el=document.querySelectorAll("#lgSteps .step");
+  for(var i=0;i<el.length;i++) el[i].className="step"+(i<langkah?" done":(i===langkah?" on":""));
+  $("lgALabel").textContent="Kata sandi verifikasi "+(langkah+1)+" dari 3";
+  $("lgAGo").textContent=langkah===2?"Masuk sebagai admin":"Lanjut";
+}
+$("lgAdmin").addEventListener("submit",function(e){
+  e.preventDefault(); err.textContent="";
+  var v=$("lgA").value.trim();
+  sha256("admin:"+v).then(function(h){
+    if(h===ADMIN[langkah]){
+      langkah++; $("lgA").value="";
+      if(langkah<3){ tandai(); $("lgA").focus(); return; }
+      masuk("admin","admin");
+    } else {
+      langkah=0; $("lgA").value=""; tandai(); salah("Kata sandi salah. Ulangi dari langkah 1."); $("lgA").focus();
+    }
+  }).catch(function(){salah("Browser ini tidak mendukung login. Buka lewat alamat https.");});
+});
+$("outBtn").addEventListener("click",function(){
+  try{["xdkv1.auth","xdkv1.role","xdkv1.user","xdkv1.tugas",UNLOCK].forEach(function(k){sessionStorage.removeItem(k);});}catch(e){}
+  location.reload();
+});
+})();
+</script>
+<audio id="bgm" src="lagu.mp3" loop preload="metadata"></audio>
+<div class="music" id="musicBox">
+  <button class="mbtn" id="prevBtn" type="button" aria-label="Lagu sebelumnya" title="Lagu sebelumnya">&#8249;</button>
+  <button class="mmain" id="musicBtn" type="button" aria-pressed="false" aria-label="Putar atau jeda musik"><span class="pl" aria-hidden="true"></span><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="lb" id="musicLb"></span></button>
+  <button class="mbtn" id="nextBtn" type="button" aria-label="Lagu berikutnya" title="Lagu berikutnya">&#8250;</button>
+</div>
+</body>
+</html>
